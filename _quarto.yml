@@ -1,0 +1,32 @@
+project:
+  type: book
+
+book:
+  title: "CSHL Computational Genomics 2023"
+  description: Course material (lectures and workshops) from Stephanie Hicks
+  author: "Stephanie Hicks"
+  date: "2023-12-01"
+  chapters:
+    - index.qmd
+    - intro-to-r.qmd
+    - exercises-01.qmd
+    - reproducible-res.qmd
+    - exercises-02.qmd
+    - tidyverse.qmd
+    - exercises-03.qmd
+    - intro-to-bioc.qmd
+    - intro-to-single-cell.qmd
+    - exercises-04.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+
+editor: visual
+
+execute:
+  freeze: auto
+

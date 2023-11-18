@@ -1,0 +1,30 @@
+# Preface {.unnumbered}
+
+Welcome to the course material from Stephanie Hicks at the CSHL Computational Genomics 2023 course!
+
+## Key resources
+
+-   Course material: <https://stephaniehicks.com/cshlcg2023>
+-   Code on GitHub: <https://github.com/stephaniehicks/cshlcg2023>
+
+## Instructor
+
+``` md
+Stephanie C. Hicks, PhD
+Associate Professor of Biomedical Engineering and Biostatistics
+Johns Hopkins Malone Center for Engineering in Healthcare
+Center for Computational Biology | Center for Imaging Science
+Johns Hopkins University
+https://www.stephaniehicks.com | shicks19@jhu.edu
+Pronouns: she/her 
+```
+
+-   web: https://www.stephaniehicks.com
+-   email: shicks19\@jhu.edu
+-   twitter: \@[stephaniehicks](http://twitter.com/stephaniehicks)
+
+## Acknowledgements
+
+This course website was developed and is maintained by Stephanie C. Hicks.
+
+The course materials are licensed under the GPL-3 License. Linked and embedded materials are governed by their own licenses. I assume that all external materials used or embedded here are covered under the educational fair use policy. If this is not the case and any material displayed here violates copyright, please let me know and I will remove it.

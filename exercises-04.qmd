@@ -1,0 +1,63 @@
+# Workshop
+
+## Overview
+
+The goal of this workshop is to build a workflow with some example single-cell RNA-seq data.
+
+## Data
+
+The `r BiocStyle::Biocpkg("scRNAseq")` package provides convenient access to several publicly available data sets in the form of `SingleCellExperiment` objects. The focus of this package is to capture datasets that are not easily read into R with a one-liner from, e.g., `read_csv()`. Instead, the necessary data munging is already done so that users only need to call a single function to obtain a well-formed `SingleCellExperiment`.
+
+```{r}
+#| message: false
+library(scRNAseq)
+```
+
+To see the list of available datasets, use the `listDatasets()` function:
+
+```{r}
+out <- listDatasets() 
+out
+```
+
+You can load a dataset the following way:
+
+```{r}
+#| message: false
+sce <- ZeiselBrainData()
+sce
+```
+
+## Tasks
+
+1.  Pick a scRNA-seq dataset that has more than 5,000 cells and load the `SingleCellExperiment` (or `sce`) object.
+
+2.  Show the number of number of genes and number of observations in the `sce` object.
+
+3.  Using the material we learned in the lecture, analyze the scRNA-seq data using the Biocondutor packages we learned about. This should include (but not be limited to)
+
+    -   Quality control (you must use at least two different QC metrics)
+    -   Normalization
+    -   Feature selection using highly variable genes
+    -   Dimensionality reduction using PCA
+    -   Data visualization using tSNE or UMAP
+    -   Unsupervised clustering (your choice of method!)
+
+4.  At the end of your analysis, show a plot of both (i) the PCA plot and (ii) either the tSNE or UMAP plot with the colors represented by the predicted labels from the clustering algorithm.
+
+5.  For each component described in Task #3, write 3-4 sentences naming and describing the idea behind the methodology you used, along with interpreting the output.
+
+```{r}
+# Add your solution here
+
+```
+
+### Useful tips
+
+-   If the original dataset was not provided with Ensembl annotation, we can map the identifiers with `ensembl=TRUE`. Any genes without a corresponding `Ensembl` identifier is discarded from the dataset.
+
+```{r}
+#| message: false
+sce <- ZeiselBrainData(ensembl=TRUE)
+head(rownames(sce))
+```

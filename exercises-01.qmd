@@ -1,0 +1,15 @@
+# Group work {.unnumbered}
+
+## Tasks
+
+Let's take 5 mins and pair up with another person. Pick out a few (or all!) of the questions below to ask each other and try to answer them.
+
+## Questions about R and RStudio
+
+1.  What is an R package and what is it used for?
+2.  What function in R can be used to install packages from CRAN?
+3.  What is a limitation of the current R system?
+4.  How many packages are on CRAN? Where can you find this information?
+5.  How many packages are on GitHub? Is it possible to find this information?
+6.  What is the craziest and/or coolest R package you have heard of?
+7.  If you had to describe a set of tasks that you would like to have in an R package, what would it be?
