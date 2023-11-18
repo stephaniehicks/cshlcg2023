@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course material (lectures and workshops) from Stephanie Hicks">
+
+<title>CSHL Computational Genomics 2023 - 3&nbsp; Tidyverse and data viz</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./exercises-03.html" rel="next">
+<link href="./exercises-02.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tidyverse.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tidyverse and data viz</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">CSHL Computational Genomics 2023</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-to-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Group work</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducible-res.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reproducible Research</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Group work</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tidyverse.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tidyverse and data viz</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Workshop</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-to-bioc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to Bioconductor</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-to-single-cell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Overview of single-cell analysis in R/Bioconductor</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Workshop</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">3.1</span> Learning objectives</a></li>
+  <li><a href="#reading-and-writing-data" id="toc-reading-and-writing-data" class="nav-link" data-scroll-target="#reading-and-writing-data"><span class="header-section-number">3.2</span> Reading and writing data</a>
+  <ul class="collapse">
+  <li><a href="#relative-paths" id="toc-relative-paths" class="nav-link" data-scroll-target="#relative-paths"><span class="header-section-number">3.2.1</span> Relative paths</a></li>
+  <li><a href="#the-here-package" id="toc-the-here-package" class="nav-link" data-scroll-target="#the-here-package"><span class="header-section-number">3.2.2</span> The <code>here</code> package</a></li>
+  <li><a href="#the-readr-package" id="toc-the-readr-package" class="nav-link" data-scroll-target="#the-readr-package"><span class="header-section-number">3.2.3</span> The <code>readr</code> package</a></li>
+  </ul></li>
+  <li><a href="#data-frames-and-tibbles" id="toc-data-frames-and-tibbles" class="nav-link" data-scroll-target="#data-frames-and-tibbles"><span class="header-section-number">3.3</span> Data frames and tibbles</a>
+  <ul class="collapse">
+  <li><a href="#tibbles" id="toc-tibbles" class="nav-link" data-scroll-target="#tibbles"><span class="header-section-number">3.3.1</span> Tibbles</a></li>
+  <li><a href="#how-tibbles-differ-from-data.frame" id="toc-how-tibbles-differ-from-data.frame" class="nav-link" data-scroll-target="#how-tibbles-differ-from-data.frame"><span class="header-section-number">3.3.2</span> How tibbles differ from <code>data.frame</code></a></li>
+  <li><a href="#as_tibble" id="toc-as_tibble" class="nav-link" data-scroll-target="#as_tibble"><span class="header-section-number">3.3.3</span> <code>as_tibble()</code></a></li>
+  </ul></li>
+  <li><a href="#the-dplyr-package" id="toc-the-dplyr-package" class="nav-link" data-scroll-target="#the-dplyr-package"><span class="header-section-number">3.4</span> The <code>dplyr</code> package</a>
+  <ul class="collapse">
+  <li><a href="#dplyr-grammar" id="toc-dplyr-grammar" class="nav-link" data-scroll-target="#dplyr-grammar"><span class="header-section-number">3.4.1</span> <code>dplyr</code> grammar</a></li>
+  <li><a href="#dplyr-installation" id="toc-dplyr-installation" class="nav-link" data-scroll-target="#dplyr-installation"><span class="header-section-number">3.4.2</span> <code>dplyr</code> installation</a></li>
+  </ul></li>
+  <li><a href="#dplyr-functions" id="toc-dplyr-functions" class="nav-link" data-scroll-target="#dplyr-functions"><span class="header-section-number">3.5</span> <code>dplyr</code> functions</a>
+  <ul class="collapse">
+  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><span class="header-section-number">3.5.1</span> <code>select()</code></a></li>
+  <li><a href="#filter" id="toc-filter" class="nav-link" data-scroll-target="#filter"><span class="header-section-number">3.5.2</span> <code>filter()</code></a></li>
+  <li><a href="#arrange" id="toc-arrange" class="nav-link" data-scroll-target="#arrange"><span class="header-section-number">3.5.3</span> <code>arrange()</code></a></li>
+  <li><a href="#rename" id="toc-rename" class="nav-link" data-scroll-target="#rename"><span class="header-section-number">3.5.4</span> <code>rename()</code></a></li>
+  <li><a href="#mutate" id="toc-mutate" class="nav-link" data-scroll-target="#mutate"><span class="header-section-number">3.5.5</span> <code>mutate()</code></a></li>
+  <li><a href="#group_by" id="toc-group_by" class="nav-link" data-scroll-target="#group_by"><span class="header-section-number">3.5.6</span> <code>group_by()</code></a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3.5.7</span> <code>%&gt;%</code></a></li>
+  <li><a href="#slice_" id="toc-slice_" class="nav-link" data-scroll-target="#slice_"><span class="header-section-number">3.5.8</span> <code>slice_*()</code></a></li>
+  </ul></li>
+  <li><a href="#the-ggplot2-plotting-system" id="toc-the-ggplot2-plotting-system" class="nav-link" data-scroll-target="#the-ggplot2-plotting-system"><span class="header-section-number">3.6</span> The ggplot2 Plotting System</a>
+  <ul class="collapse">
+  <li><a href="#basic-components-of-a-ggplot2-plot" id="toc-basic-components-of-a-ggplot2-plot" class="nav-link" data-scroll-target="#basic-components-of-a-ggplot2-plot"><span class="header-section-number">3.6.1</span> Basic components of a ggplot2 plot</a></li>
+  </ul></li>
+  <li><a href="#building-up-in-layers" id="toc-building-up-in-layers" class="nav-link" data-scroll-target="#building-up-in-layers"><span class="header-section-number">3.7</span> Building up in layers</a>
+  <ul class="collapse">
+  <li><a href="#palmerpenguins-dataset" id="toc-palmerpenguins-dataset" class="nav-link" data-scroll-target="#palmerpenguins-dataset"><span class="header-section-number">3.7.1</span> <code>palmerpenguins</code> dataset</a></li>
+  <li><a href="#first-plot-with-point-layer" id="toc-first-plot-with-point-layer" class="nav-link" data-scroll-target="#first-plot-with-point-layer"><span class="header-section-number">3.7.2</span> First plot with point layer</a></li>
+  <li><a href="#adding-more-layers" id="toc-adding-more-layers" class="nav-link" data-scroll-target="#adding-more-layers"><span class="header-section-number">3.7.3</span> Adding more layers</a></li>
+  </ul></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">3.8</span> Session Info</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tidyverse and data viz</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>“Happy families are all alike; every unhappy family is unhappy in its own way.” —- Leo Tolstoy</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>“Tidy datasets are all alike, but every messy dataset is messy in its own way.” —- Hadley Wickham</p>
+</blockquote>
+<section id="learning-objectives" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">3.1</span> Learning objectives</h2>
+<ul>
+<li>Know difference between relative vs absolute paths</li>
+<li>Use modern R packages (<code>readr</code>) for reading and writing data in R</li>
+<li>Understand the advantages of a <code>tibble</code> and <code>data.frame</code> data objects in R</li>
+<li>Learn about the <code>dplyr</code> R package to manage data frames</li>
+<li>Recognize the key verbs to manage data frames in <code>dplyr</code></li>
+<li>Use the “pipe” operator to combine verbs together</li>
+<li>Be able to build up layers of graphics using <code>ggplot()</code></li>
+</ul>
+</section>
+<section id="reading-and-writing-data" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="reading-and-writing-data"><span class="header-section-number">3.2</span> Reading and writing data</h2>
+<p>Here, we introduce ays to read and write data (e.g.&nbsp;<code>.txt</code> and <code>.csv</code> files) using base R functions as well as more modern R packages, such as <code>readr</code>, which is typically <a href="https://r4ds.had.co.nz/data-import.html#compared-to-base-r">10x faster than base R</a>.</p>
+<section id="relative-paths" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="relative-paths"><span class="header-section-number">3.2.1</span> Relative paths</h3>
+<p>When you open up a <code>.Rproj</code> file, RStudio changes the path (location on your computer) to the <code>.Rproj</code> location.</p>
+<p>After opening up a <code>.Rproj</code> file, you can test this by</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When you open up someone else’s R code or analysis, you might also see the</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>function being used which explicitly tells R to change the absolute path or absolute location of which directory to move into.</p>
+<p>For example, say I want to clone a GitHub repo from Roger, which has 100 R script files, and in every one of those files at the top is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:\Users\Roger\path\only</span><span class="sc">\t</span><span class="st">hat\Roger\has"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The problem is, if I want to use his code, I will need to go and hand-edit every single one of those paths (<code>C:\Users\Roger\path\only\that\Roger\has</code>) to the path that I want to use on my computer or wherever I saved the folder on my computer (e.g.&nbsp;<code>/Users/Stephanie/Documents/path/only/I/have</code>).</p>
+<ol type="1">
+<li>This is an unsustainable practice.</li>
+<li>I can go in and manually edit the path, but this assumes I know how to set a working directory. Not everyone does.</li>
+</ol>
+<p>So instead of absolute paths:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/jtleek/data"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"~/Desktop/files/data"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">Michelle</span><span class="sc">\\</span><span class="st">Downloads"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A <strong>better idea is to use relative paths with the <a href="https://github.com/r-lib/here">here</a> R package</strong>.</p>
+<ul>
+<li>It will recognize the top-level directory of a Git repo and supports building all paths relative to that.</li>
+<li>For more on project-oriented workflow suggestions, read <a href="https://www.tidyverse.org/articles/2017/12/workflow-vs-script/">this post</a> from Jenny Bryan.</li>
+</ul>
+</section>
+<section id="the-here-package" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="the-here-package"><span class="header-section-number">3.2.2</span> The <code>here</code> package</h3>
+<p>Let’s try using the <code>here</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at /Users/stephaniehicks/Documents/github/teaching/cshlcg2023</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/Users/stephaniehicks/Documents/github/teaching/cshlcg2023"</code></pre>
+</div>
+</div>
+<p>This function creates a path unique to my computer, but will also be unique to yours.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(here<span class="sc">::</span><span class="fu">here</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "_book"                    "_freeze"                 
+ [3] "_quarto.yml"              "cover.png"               
+ [5] "cshlcg2023.Rproj"         "data"                    
+ [7] "exercises-01.html"        "exercises-01.qmd"        
+ [9] "exercises-02.html"        "exercises-02.qmd"        
+[11] "exercises-03.qmd"         "exercises-04.qmd"        
+[13] "figures"                  "index.html"              
+[15] "index.qmd"                "intro-to-bioc.qmd"       
+[17] "intro-to-r.html"          "intro-to-r.qmd"          
+[19] "intro-to-single-cell.qmd" "references.bib"          
+[21] "references.qmd"           "reproducible-res_files"  
+[23] "reproducible-res.html"    "reproducible-res.qmd"    
+[25] "site_libs"                "tidyverse_files"         
+[27] "tidyverse.qmd"            "tidyverse.rmarkdown"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="fu">here</span>(<span class="st">"data"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "asthma.rda"         "chicago.rds"        "spotify_songs.RDS" 
+[4] "team_standings.csv"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"team_standings.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>character(0)</code></pre>
+</div>
+</div>
+<p>Now we see that using the <code>here::here()</code> function is a <em>relative</em> path (relative to the <code>.Rproj</code> file in our <code>cshlcg2022</code> folder.</p>
+<p>Next, let’s use the <code>here</code> package to read in some data with the <code>readr</code> package.</p>
+</section>
+<section id="the-readr-package" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="the-readr-package"><span class="header-section-number">3.2.3</span> The <code>readr</code> package</h3>
+<p>The <code>readr</code> package is recently developed by posit (formerly RStudio) to deal with reading in large flat files quickly. The package provides replacements for functions like <code>read.table()</code> and <code>read.csv()</code>. The analogous functions in <code>readr</code> are <code>read_table()</code> and <code>read_csv()</code>.</p>
+<p>These functions are often <em>much</em> faster than their base R analogues and provide a few other nice features such as progress meters.</p>
+<p>For example, the package includes a variety of functions in the <code>read_*()</code> family that allow you to read in data from different formats of flat files. The following table gives a guide to several functions in the <code>read_*()</code> family.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><code>readr</code> function</th>
+<th style="text-align: left;">Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>read_csv()</code></td>
+<td style="text-align: left;">Reads comma-separated file</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>read_csv2()</code></td>
+<td style="text-align: left;">Reads semicolon-separated file</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>read_tsv()</code></td>
+<td style="text-align: left;">Reads tab-separated file</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>read_delim()</code></td>
+<td style="text-align: left;">General function for reading delimited files</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>read_fwf()</code></td>
+<td style="text-align: left;">Reads fixed width files</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>read_log()</code></td>
+<td style="text-align: left;">Reads log files</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>A typical call to <code>read_csv()</code> will look as follows.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>teams <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"team_standings.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 32 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): Team
+dbl (1): Standing
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>teams</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 2
+   Standing Team       
+      &lt;dbl&gt; &lt;chr&gt;      
+ 1        1 Spain      
+ 2        2 Netherlands
+ 3        3 Germany    
+ 4        4 Uruguay    
+ 5        5 Argentina  
+ 6        6 Brazil     
+ 7        7 Ghana      
+ 8        8 Paraguay   
+ 9        9 Japan      
+10       10 Chile      
+# ℹ 22 more rows</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="data-frames-and-tibbles" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="data-frames-and-tibbles"><span class="header-section-number">3.3</span> Data frames and tibbles</h2>
+<p>The <strong>data frame</strong> (or <code>data.frame</code>) is a <strong>key data structure</strong> in statistics and in R.</p>
+<p>The basic structure of a data frame is that there is <strong>one observation per row and each column represents a variable, a measure, feature, or characteristic of that observation</strong>.</p>
+<p>Given the importance of managing data frames, it is <strong>important that we have good tools for dealing with them.</strong></p>
+<p>For example, <strong>operations</strong> like filtering rows, re-ordering rows, and selecting columns, can often be tedious operations in R whose syntax is not very intuitive. The <code>dplyr</code> package in the <code>tidyverse</code> is designed to mitigate a lot of these problems and to provide a highly optimized set of routines specifically for dealing with data frames.</p>
+<section id="tibbles" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="tibbles"><span class="header-section-number">3.3.1</span> Tibbles</h3>
+<p>Another type of data structure that we need to discuss is called the <strong>tibble</strong>! It’s best to think of tibbles as an updated and stylish version of the <code>data.frame</code>.</p>
+<p>Tibbles are what tidyverse packages work with most seamlessly. Now, that <strong>does not mean tidyverse packages <em>require</em> tibbles</strong>.</p>
+<p>In fact, they still work with <code>data.frames</code>, but the more you work with tidyverse and tidyverse-adjacent packages, the more you will see the advantages of using tibbles.</p>
+<p>Before we go any further, tibbles <em>are</em> data frames, but they have some new bells and whistles to make your life easier.</p>
+</section>
+<section id="how-tibbles-differ-from-data.frame" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="how-tibbles-differ-from-data.frame"><span class="header-section-number">3.3.2</span> How tibbles differ from <code>data.frame</code></h3>
+<p>There are a number of differences between tibbles and <code>data.frames</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To see a full vignette about tibbles and how they differ from data.frame, you will want to execute <code>vignette("tibble")</code> and read through that vignette.</p>
+</div>
+</div>
+<p>We will summarize some of the most important points here:</p>
+<ul>
+<li><strong>Input type remains unchanged</strong> - <code>data.frame</code> is notorious for treating strings as factors; this will not happen with tibbles</li>
+<li><strong>Variable names remain unchanged</strong> - In base R, creating <code>data.frames</code> will remove spaces from names, converting them to periods or add “x” before numeric column names. Creating tibbles will not change variable (column) names.</li>
+<li><strong>There are no <code>row.names()</code> for a tibble</strong> - Tidy data requires that variables be stored in a consistent way, removing the need for row names.</li>
+<li><strong>Tibbles print first ten rows and columns that fit on one screen</strong> - Printing a tibble to screen will never print the entire huge data frame out. By default, it just shows what fits to your screen.</li>
+</ul>
+</section>
+<section id="as_tibble" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="as_tibble"><span class="header-section-number">3.3.3</span> <code>as_tibble()</code></h3>
+<p>Since many packages use the historical <code>data.frame</code> from base R, you will often find yourself in the situation that you have a <code>data.frame</code> and want to convert that <code>data.frame</code> to a <code>tibbl</code>e.</p>
+<p>To do so, the <code>as_tibble()</code> function is exactly what you are looking for.</p>
+<p>For the example, here we use a dataset (<code>chicago.rds</code>) containing air pollution and temperature data for the city of Chicago in the U.S.</p>
+<p>The dataset is available in the <code>/data</code> repository. You can load the data into R using the <code>readRDS()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>chicago <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"chicago.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can see some basic characteristics of the dataset with the <code>dim()</code> and <code>str()</code> functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(chicago)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6940    8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(chicago)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   6940 obs. of  8 variables:
+ $ city      : chr  "chic" "chic" "chic" "chic" ...
+ $ tmpd      : num  31.5 33 33 29 32 40 34.5 29 26.5 32.5 ...
+ $ dptp      : num  31.5 29.9 27.4 28.6 28.9 ...
+ $ date      : Date, format: "1987-01-01" "1987-01-02" ...
+ $ pm25tmean2: num  NA NA NA NA NA NA NA NA NA NA ...
+ $ pm10tmean2: num  34 NA 34.2 47 NA ...
+ $ o3tmean2  : num  4.25 3.3 3.33 4.38 4.75 ...
+ $ no2tmean2 : num  20 23.2 23.8 30.4 30.3 ...</code></pre>
+</div>
+</div>
+<p>We see this data structure is a <code>data.frame</code> with 6940 observations and 8 variables.</p>
+<p>To convert this <code>data.frame</code> to a tibble you would use the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(<span class="fu">as_tibble</span>(chicago))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [6,940 × 8] (S3: tbl_df/tbl/data.frame)
+ $ city      : chr [1:6940] "chic" "chic" "chic" "chic" ...
+ $ tmpd      : num [1:6940] 31.5 33 33 29 32 40 34.5 29 26.5 32.5 ...
+ $ dptp      : num [1:6940] 31.5 29.9 27.4 28.6 28.9 ...
+ $ date      : Date[1:6940], format: "1987-01-01" "1987-01-02" ...
+ $ pm25tmean2: num [1:6940] NA NA NA NA NA NA NA NA NA NA ...
+ $ pm10tmean2: num [1:6940] 34 NA 34.2 47 NA ...
+ $ o3tmean2  : num [1:6940] 4.25 3.3 3.33 4.38 4.75 ...
+ $ no2tmean2 : num [1:6940] 20 23.2 23.8 30.4 30.3 ...</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="the-dplyr-package" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="the-dplyr-package"><span class="header-section-number">3.4</span> The <code>dplyr</code> package</h2>
+<p>The <code>dplyr</code> package was developed by Posit (formely RStudio) and is <strong>an optimized and distilled</strong> version of the older <code>plyr</code> <strong>package for data manipulation or wrangling</strong>.</p>
+<p>The <code>dplyr</code> package does not provide any “new” functionality to R per se, in the sense that everything <code>dplyr</code> does could already be done with base R, but it <strong>greatly</strong> simplifies existing functionality in R.</p>
+<p>One important contribution of the <code>dplyr</code> package is that it <strong>provides a “grammar” (in particular, verbs) for data manipulation and for operating on data frames</strong>.</p>
+<p>With this grammar, you can sensibly communicate what it is that you are doing to a data frame that other people can understand (assuming they also know the grammar). This is useful because it <strong>provides an abstraction for data manipulation that previously did not exist</strong>.</p>
+<p>Another useful contribution is that the <code>dplyr</code> functions are <strong>very</strong> fast, as many key operations are coded in C++.</p>
+<section id="dplyr-grammar" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="dplyr-grammar"><span class="header-section-number">3.4.1</span> <code>dplyr</code> grammar</h3>
+<p>Some of the key “verbs” provided by the <code>dplyr</code> package are</p>
+<ul>
+<li><p><code>select()</code>: return a subset of the columns of a data frame, using a flexible notation</p></li>
+<li><p><code>filter()</code>: extract a subset of rows from a data frame based on logical conditions</p></li>
+<li><p><code>arrange()</code>: reorder rows of a data frame</p></li>
+<li><p><code>rename()</code>: rename variables in a data frame</p></li>
+<li><p><code>mutate()</code>: add new variables/columns or transform existing variables</p></li>
+<li><p><code>summarise()</code> / <code>summarize()</code>: generate summary statistics of different variables in the data frame, possibly within strata</p></li>
+<li><p><code>%&gt;%</code>: the “pipe” operator is used to connect multiple verb actions together into a pipeline</p></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>dplyr</code> package as a number of its own data types that it takes advantage of.</p>
+<p>For example, there is a handy <code>print()</code> method that prevents you from printing a lot of data to the console. Most of the time, these additional data types are transparent to the user and do not need to be worried about.</p>
+</div>
+</div>
+</section>
+<section id="dplyr-installation" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="dplyr-installation"><span class="header-section-number">3.4.2</span> <code>dplyr</code> installation</h3>
+<p>The <code>dplyr</code> package is installed when you install and load the <code>tidyverse</code> meta-package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You may get some warnings when the package is loaded because there are functions in the <code>dplyr</code> package that have the same name as functions in other packages. For now you can ignore the warnings.</p>
+</section>
+</section>
+<section id="dplyr-functions" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="dplyr-functions"><span class="header-section-number">3.5</span> <code>dplyr</code> functions</h2>
+<p>All of the functions that we will discuss here will have a few common characteristics. In particular,</p>
+<ol type="1">
+<li><p>The <strong>first argument</strong> is a data frame type object.</p></li>
+<li><p>The <strong>subsequent arguments</strong> describe what to do with the data frame specified in the first argument, and you can refer to columns in the data frame directly (without using the <code>$</code> operator, just use the column names).</p></li>
+<li><p>The <strong>return result</strong> of a function is a new data frame.</p></li>
+<li><p>Data frames must be <strong>properly formatted</strong> and annotated for this to all be useful. In particular, the data must be <a href="http://www.jstatsoft.org/v59/i10/paper">tidy</a>. In short, there should be one observation per row, and each column should represent a feature or characteristic of that observation.</p></li>
+</ol>
+<section id="select" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="select"><span class="header-section-number">3.5.1</span> <code>select()</code></h3>
+<p>We will continue to use the <code>chicago</code> dataset containing air pollution and temperature data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>chicago <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(chicago)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(chicago)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [6,940 × 8] (S3: tbl_df/tbl/data.frame)
+ $ city      : chr [1:6940] "chic" "chic" "chic" "chic" ...
+ $ tmpd      : num [1:6940] 31.5 33 33 29 32 40 34.5 29 26.5 32.5 ...
+ $ dptp      : num [1:6940] 31.5 29.9 27.4 28.6 28.9 ...
+ $ date      : Date[1:6940], format: "1987-01-01" "1987-01-02" ...
+ $ pm25tmean2: num [1:6940] NA NA NA NA NA NA NA NA NA NA ...
+ $ pm10tmean2: num [1:6940] 34 NA 34.2 47 NA ...
+ $ o3tmean2  : num [1:6940] 4.25 3.3 3.33 4.38 4.75 ...
+ $ no2tmean2 : num [1:6940] 20 23.2 23.8 30.4 30.3 ...</code></pre>
+</div>
+</div>
+<p>The <code>select()</code> function can be used to <strong>select columns of a data frame</strong> that you want to focus on.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose we wanted to take the first 3 columns only. There are a few ways to do this.</p>
+<p>We could for example use numerical indices:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(chicago)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "city" "tmpd" "dptp"</code></pre>
+</div>
+</div>
+<p>But we can also use the names directly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>subset <span class="ot">&lt;-</span> <span class="fu">select</span>(chicago, city<span class="sc">:</span>dptp)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  city   tmpd  dptp
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 chic   31.5  31.5
+2 chic   33    29.9
+3 chic   33    27.4
+4 chic   29    28.6
+5 chic   32    28.9
+6 chic   40    35.1</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>:</code> normally cannot be used with names or strings, but inside the <code>select()</code> function you can use it to specify a range of variable names.</p>
+<p>You can also <strong>omit</strong> variables using the <code>select()</code> function by using the negative sign. With <code>select()</code> you can do</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(chicago, <span class="sc">-</span>(city<span class="sc">:</span>dptp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>which indicates that we should include every variable <em>except</em> the variables <code>city</code> through <code>dptp</code>. The equivalent code in base R would be</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="fu">match</span>(<span class="st">"city"</span>, <span class="fu">names</span>(chicago))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="fu">match</span>(<span class="st">"dptp"</span>, <span class="fu">names</span>(chicago))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chicago[, <span class="sc">-</span>(i<span class="sc">:</span>j)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>Not super intuitive, right?</p>
+<p>The <code>select()</code> function also allows a special syntax that allows you to specify variable names based on patterns. So, for example, if you wanted to keep every variable that ends with a “2”, we could do</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>subset <span class="ot">&lt;-</span> <span class="fu">select</span>(chicago, <span class="fu">ends_with</span>(<span class="st">"2"</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [6,940 × 4] (S3: tbl_df/tbl/data.frame)
+ $ pm25tmean2: num [1:6940] NA NA NA NA NA NA NA NA NA NA ...
+ $ pm10tmean2: num [1:6940] 34 NA 34.2 47 NA ...
+ $ o3tmean2  : num [1:6940] 4.25 3.3 3.33 4.38 4.75 ...
+ $ no2tmean2 : num [1:6940] 20 23.2 23.8 30.4 30.3 ...</code></pre>
+</div>
+</div>
+<p>Or if we wanted to keep every variable that starts with a “d”, we could do</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>subset <span class="ot">&lt;-</span> <span class="fu">select</span>(chicago, <span class="fu">starts_with</span>(<span class="st">"d"</span>))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [6,940 × 2] (S3: tbl_df/tbl/data.frame)
+ $ dptp: num [1:6940] 31.5 29.9 27.4 28.6 28.9 ...
+ $ date: Date[1:6940], format: "1987-01-01" "1987-01-02" ...</code></pre>
+</div>
+</div>
+<p>You can also use more general regular expressions if necessary. See the help page (<code>?select</code>) for more details.</p>
+</section>
+<section id="filter" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="filter"><span class="header-section-number">3.5.2</span> <code>filter()</code></h3>
+<p>The <code>filter()</code> function is used to <strong>extract subsets of rows</strong> from a data frame. This function is similar to the existing <code>subset()</code> function in R but is quite a bit faster in my experience.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose we wanted to extract the rows of the <code>chicago</code> data frame where the levels of PM2.5 are greater than 30 (which is a reasonably high level), we could do</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>chic.f <span class="ot">&lt;-</span> <span class="fu">filter</span>(chicago, pm25tmean2 <span class="sc">&gt;</span> <span class="dv">30</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(chic.f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [194 × 8] (S3: tbl_df/tbl/data.frame)
+ $ city      : chr [1:194] "chic" "chic" "chic" "chic" ...
+ $ tmpd      : num [1:194] 23 28 55 59 57 57 75 61 73 78 ...
+ $ dptp      : num [1:194] 21.9 25.8 51.3 53.7 52 56 65.8 59 60.3 67.1 ...
+ $ date      : Date[1:194], format: "1998-01-17" "1998-01-23" ...
+ $ pm25tmean2: num [1:194] 38.1 34 39.4 35.4 33.3 ...
+ $ pm10tmean2: num [1:194] 32.5 38.7 34 28.5 35 ...
+ $ o3tmean2  : num [1:194] 3.18 1.75 10.79 14.3 20.66 ...
+ $ no2tmean2 : num [1:194] 25.3 29.4 25.3 31.4 26.8 ...</code></pre>
+</div>
+</div>
+<p>You can see that there are now only 194 rows in the data frame and the distribution of the <code>pm25tmean2</code> values is.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(chic.f<span class="sc">$</span>pm25tmean2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  30.05   32.12   35.04   36.63   39.53   61.50 </code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>We can place an arbitrarily complex logical sequence inside of <code>filter()</code>, so we could for example extract the rows where PM2.5 is greater than 30 <em>and</em> temperature is greater than 80 degrees Fahrenheit.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>chic.f <span class="ot">&lt;-</span> <span class="fu">filter</span>(chicago, pm25tmean2 <span class="sc">&gt;</span> <span class="dv">30</span> <span class="sc">&amp;</span> tmpd <span class="sc">&gt;</span> <span class="dv">80</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(chic.f, date, tmpd, pm25tmean2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17 × 3
+   date        tmpd pm25tmean2
+   &lt;date&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+ 1 1998-08-23    81       39.6
+ 2 1998-09-06    81       31.5
+ 3 2001-07-20    82       32.3
+ 4 2001-08-01    84       43.7
+ 5 2001-08-08    85       38.8
+ 6 2001-08-09    84       38.2
+ 7 2002-06-20    82       33  
+ 8 2002-06-23    82       42.5
+ 9 2002-07-08    81       33.1
+10 2002-07-18    82       38.8
+11 2003-06-25    82       33.9
+12 2003-07-04    84       32.9
+13 2005-06-24    86       31.9
+14 2005-06-27    82       51.5
+15 2005-06-28    85       31.2
+16 2005-07-17    84       32.7
+17 2005-08-03    84       37.9</code></pre>
+</div>
+</div>
+<p>Now there are only 17 observations where both of those conditions are met.</p>
+<p>Other logical operators you should be aware of include:</p>
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 37%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Operator</th>
+<th style="text-align: right;">Meaning</th>
+<th style="text-align: right;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><code>==</code></td>
+<td style="text-align: right;">Equals</td>
+<td style="text-align: right;"><code>city == chic</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>!=</code></td>
+<td style="text-align: right;">Does not equal</td>
+<td style="text-align: right;"><code>city != chic</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>&gt;</code></td>
+<td style="text-align: right;">Greater than</td>
+<td style="text-align: right;"><code>tmpd &gt; 32.0</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>&gt;=</code></td>
+<td style="text-align: right;">Greater than or equal to</td>
+<td style="text-align: right;"><code>tmpd &gt;- 32.0</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>&lt;</code></td>
+<td style="text-align: right;">Less than</td>
+<td style="text-align: right;"><code>tmpd &lt; 32.0</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>&lt;=</code></td>
+<td style="text-align: right;">Less than or equal to</td>
+<td style="text-align: right;"><code>tmpd &lt;= 32.0</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>%in%</code></td>
+<td style="text-align: right;">Included in</td>
+<td style="text-align: right;"><code>city %in% c("chic", "bmore")</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>is.na()</code></td>
+<td style="text-align: right;">Is a missing value</td>
+<td style="text-align: right;"><code>is.na(pm10tmean2)</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: If you are ever unsure of how to write a logical statement, but know how to write its opposite, you can use the <code>!</code> operator to negate the whole statement.</p>
+<p>A common use of this is to identify observations with non-missing data (e.g., <code>!(is.na(pm10tmean2))</code>).</p>
+</section>
+<section id="arrange" class="level3" data-number="3.5.3">
+<h3 data-number="3.5.3" class="anchored" data-anchor-id="arrange"><span class="header-section-number">3.5.3</span> <code>arrange()</code></h3>
+<p>The <code>arrange()</code> function is used to <strong>reorder rows</strong> of a data frame according to one of the variables/columns. Reordering rows of a data frame (while preserving corresponding order of other columns) is normally a pain to do in R. The <code>arrange()</code> function simplifies the process quite a bit.</p>
+<p>Here we can order the rows of the data frame by date, so that the first row is the earliest (oldest) observation and the last row is the latest (most recent) observation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>chicago <span class="ot">&lt;-</span> <span class="fu">arrange</span>(chicago, date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now check the first few rows</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">select</span>(chicago, date, pm25tmean2), <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  date       pm25tmean2
+  &lt;date&gt;          &lt;dbl&gt;
+1 1987-01-01         NA
+2 1987-01-02         NA
+3 1987-01-03         NA</code></pre>
+</div>
+</div>
+<p>and the last few rows.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">select</span>(chicago, date, pm25tmean2), <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  date       pm25tmean2
+  &lt;date&gt;          &lt;dbl&gt;
+1 2005-12-29       7.45
+2 2005-12-30      15.1 
+3 2005-12-31      15   </code></pre>
+</div>
+</div>
+<p>Columns can be arranged in descending order too by useing the special <code>desc()</code> operator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>chicago <span class="ot">&lt;-</span> <span class="fu">arrange</span>(chicago, <span class="fu">desc</span>(date))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Looking at the first three and last three rows shows the dates in descending order.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">select</span>(chicago, date, pm25tmean2), <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  date       pm25tmean2
+  &lt;date&gt;          &lt;dbl&gt;
+1 2005-12-31      15   
+2 2005-12-30      15.1 
+3 2005-12-29       7.45</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">select</span>(chicago, date, pm25tmean2), <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  date       pm25tmean2
+  &lt;date&gt;          &lt;dbl&gt;
+1 1987-01-03         NA
+2 1987-01-02         NA
+3 1987-01-01         NA</code></pre>
+</div>
+</div>
+</section>
+<section id="rename" class="level3" data-number="3.5.4">
+<h3 data-number="3.5.4" class="anchored" data-anchor-id="rename"><span class="header-section-number">3.5.4</span> <code>rename()</code></h3>
+<p><strong>Renaming a variable</strong> in a data frame in R is surprisingly hard to do! The <code>rename()</code> function is designed to make this process easier.</p>
+<p>Here you can see the names of the first five variables in the <code>chicago</code> data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chicago[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  city   tmpd  dptp date       pm25tmean2
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;          &lt;dbl&gt;
+1 chic     35  30.1 2005-12-31      15   
+2 chic     36  31   2005-12-30      15.1 
+3 chic     35  29.4 2005-12-29       7.45</code></pre>
+</div>
+</div>
+<p>The <code>dptp</code> column is supposed to represent the dew point temperature and the <code>pm25tmean2</code> column provides the PM2.5 data.</p>
+<p>However, these names are pretty obscure or awkward and probably be renamed to something more sensible.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>chicago <span class="ot">&lt;-</span> <span class="fu">rename</span>(chicago, <span class="at">dewpoint =</span> dptp, <span class="at">pm25 =</span> pm25tmean2)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chicago[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  city   tmpd dewpoint date        pm25
+  &lt;chr&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;
+1 chic     35     30.1 2005-12-31 15   
+2 chic     36     31   2005-12-30 15.1 
+3 chic     35     29.4 2005-12-29  7.45</code></pre>
+</div>
+</div>
+<p>The syntax inside the <code>rename()</code> function is to have the new name on the left-hand side of the <code>=</code> sign and the old name on the right-hand side.</p>
+</section>
+<section id="mutate" class="level3" data-number="3.5.5">
+<h3 data-number="3.5.5" class="anchored" data-anchor-id="mutate"><span class="header-section-number">3.5.5</span> <code>mutate()</code></h3>
+<p>The <code>mutate()</code> function exists to <strong>compute transformations of variables</strong> in a data frame. Often, you want to create new variables that are derived from existing variables and <code>mutate()</code> provides a clean interface for doing that.</p>
+<p>For example, with air pollution data, we often want to <em>detrend</em> the data by subtracting the mean from the data.</p>
+<ul>
+<li>That way we can look at whether a given day’s air pollution level is higher than or less than average (as opposed to looking at its absolute level).</li>
+</ul>
+<p>Here, we create a <code>pm25detrend</code> variable that subtracts the mean from the <code>pm25</code> variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>chicago <span class="ot">&lt;-</span> <span class="fu">mutate</span>(chicago, <span class="at">pm25detrend =</span> pm25 <span class="sc">-</span> <span class="fu">mean</span>(pm25, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chicago)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+  city   tmpd dewpoint date        pm25 pm10tmean2 o3tmean2 no2tmean2
+  &lt;chr&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 chic     35     30.1 2005-12-31 15          23.5     2.53      13.2
+2 chic     36     31   2005-12-30 15.1        19.2     3.03      22.8
+3 chic     35     29.4 2005-12-29  7.45       23.5     6.79      20.0
+4 chic     37     34.5 2005-12-28 17.8        27.5     3.26      19.3
+5 chic     40     33.6 2005-12-27 23.6        27       4.47      23.5
+6 chic     35     29.6 2005-12-26  8.4         8.5    14.0       16.8
+# ℹ 1 more variable: pm25detrend &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>There is also the related <code>transmute()</code> function, which does the same thing as <code>mutate()</code> but then <strong>drops all non-transformed variables</strong>.</p>
+<p>Here, we de-trend the PM10 and ozone (O3) variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">transmute</span>(chicago, </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">pm10detrend =</span> pm10tmean2 <span class="sc">-</span> <span class="fu">mean</span>(pm10tmean2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">o3detrend =</span> o3tmean2 <span class="sc">-</span> <span class="fu">mean</span>(o3tmean2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  pm10detrend o3detrend
+        &lt;dbl&gt;     &lt;dbl&gt;
+1      -10.4     -16.9 
+2      -14.7     -16.4 
+3      -10.4     -12.6 
+4       -6.40    -16.2 
+5       -6.90    -15.0 
+6      -25.4      -5.39</code></pre>
+</div>
+</div>
+<p>Note that there are only two columns in the transmuted data frame.</p>
+</section>
+<section id="group_by" class="level3" data-number="3.5.6">
+<h3 data-number="3.5.6" class="anchored" data-anchor-id="group_by"><span class="header-section-number">3.5.6</span> <code>group_by()</code></h3>
+<p>The <code>group_by()</code> function is used to <strong>generate summary statistics</strong> from the data frame within strata defined by a variable.</p>
+<p>For example, in this air pollution dataset, you might want to know what the average annual level of PM2.5 is?</p>
+<p>So the stratum is the year, and that is something we can derive from the <code>date</code> variable.</p>
+<p><strong>In conjunction</strong> with the <code>group_by()</code> function, we often use the <code>summarize()</code> function (or <code>summarise()</code> for some parts of the world).</p>
+<p><strong>Note</strong>: The <strong>general operation</strong> here is a combination of</p>
+<ol type="1">
+<li>Splitting a data frame into separate pieces defined by a variable or group of variables (<code>group_by()</code>)</li>
+<li>Then, applying a summary function across those subsets (<code>summarize()</code>)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>First, we can create a <code>year</code> variable using <code>as.POSIXlt()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>chicago <span class="ot">&lt;-</span> <span class="fu">mutate</span>(chicago, <span class="at">year =</span> <span class="fu">as.POSIXlt</span>(date)<span class="sc">$</span>year <span class="sc">+</span> <span class="dv">1900</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can create a separate data frame that splits the original data frame by year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">group_by</span>(chicago, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we compute summary statistics for each year in the data frame with the <code>summarize()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(years, </span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">pm25 =</span> <span class="fu">mean</span>(pm25, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">o3 =</span> <span class="fu">max</span>(o3tmean2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">no2 =</span> <span class="fu">median</span>(no2tmean2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19 × 4
+    year  pm25    o3   no2
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  1987 NaN    63.0  23.5
+ 2  1988 NaN    61.7  24.5
+ 3  1989 NaN    59.7  26.1
+ 4  1990 NaN    52.2  22.6
+ 5  1991 NaN    63.1  21.4
+ 6  1992 NaN    50.8  24.8
+ 7  1993 NaN    44.3  25.8
+ 8  1994 NaN    52.2  28.5
+ 9  1995 NaN    66.6  27.3
+10  1996 NaN    58.4  26.4
+11  1997 NaN    56.5  25.5
+12  1998  18.3  50.7  24.6
+13  1999  18.5  57.5  24.7
+14  2000  16.9  55.8  23.5
+15  2001  16.9  51.8  25.1
+16  2002  15.3  54.9  22.7
+17  2003  15.2  56.2  24.6
+18  2004  14.6  44.5  23.4
+19  2005  16.2  58.8  22.6</code></pre>
+</div>
+</div>
+<p><code>summarize()</code> returns a data frame with <code>year</code> as the first column, and then the annual summary statistics of <code>pm25</code>, <code>o3</code>, and <code>no2</code>.</p>
+</div>
+</div>
+</section>
+<section id="section" class="level3" data-number="3.5.7">
+<h3 data-number="3.5.7" class="anchored" data-anchor-id="section"><span class="header-section-number">3.5.7</span> <code>%&gt;%</code></h3>
+<p>The pipeline operator <code>%&gt;%</code> is very handy for <strong>stringing together multiple <code>dplyr</code> functions in a sequence of operations</strong>.</p>
+<p>Notice above that every time we wanted to apply more than one function, the sequence gets buried in a sequence of nested function calls that is difficult to read, i.e.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">third</span>(<span class="fu">second</span>(<span class="fu">first</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This <strong>nesting is not a natural way</strong> to think about a sequence of operations.</p>
+<p>The <code>%&gt;%</code> operator allows you to string operations in a left-to-right fashion, i.e.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(x) <span class="sc">%&gt;%</span> second <span class="sc">%&gt;%</span> third</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Take the example that we just did in the last section, but here use the pipe operator in a single expression.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(chicago, <span class="at">year =</span> <span class="fu">as.POSIXlt</span>(date)<span class="sc">$</span>year <span class="sc">+</span> <span class="dv">1900</span>) <span class="sc">%&gt;%</span>    </span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarize</span>(years, <span class="at">pm25 =</span> <span class="fu">mean</span>(pm25, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">o3 =</span> <span class="fu">max</span>(o3tmean2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">no2 =</span> <span class="fu">median</span>(no2tmean2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+dplyr 1.1.0.
+ℹ Please use `reframe()` instead.
+ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+  always returns an ungrouped data frame and adjust accordingly.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'year'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 131,860 × 12
+# Groups:   year [19]
+    year city   tmpd dewpoint date        pm25 pm10tmean2 o3tmean2 no2tmean2
+   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1  2005 chic     35     30.1 2005-12-31  16.2       23.5     2.53      13.2
+ 2  2005 chic     36     31   2005-12-30  16.2       19.2     3.03      22.8
+ 3  2005 chic     35     29.4 2005-12-29  16.2       23.5     6.79      20.0
+ 4  2005 chic     37     34.5 2005-12-28  16.2       27.5     3.26      19.3
+ 5  2005 chic     40     33.6 2005-12-27  16.2       27       4.47      23.5
+ 6  2005 chic     35     29.6 2005-12-26  16.2        8.5    14.0       16.8
+ 7  2005 chic     35     32.1 2005-12-25  16.2        8      14.4       13.8
+ 8  2005 chic     37     35.2 2005-12-24  16.2       25.2     1.77      32.0
+ 9  2005 chic     41     32.6 2005-12-23  16.2       34.5     6.91      29.1
+10  2005 chic     22     23.3 2005-12-22  16.2       42.5     5.39      33.7
+# ℹ 131,850 more rows
+# ℹ 3 more variables: pm25detrend &lt;dbl&gt;, o3 &lt;dbl&gt;, no2 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the above code, I pass the <code>chicago</code> data frame to the first call to <code>mutate()</code>, but then afterwards I do not have to pass the first argument to <code>group_by()</code> or <code>summarize()</code>.</p>
+<ul>
+<li>Once you travel down the pipeline with <code>%&gt;%</code>, the first argument is taken to be the output of the previous element in the pipeline.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="slice_" class="level3" data-number="3.5.8">
+<h3 data-number="3.5.8" class="anchored" data-anchor-id="slice_"><span class="header-section-number">3.5.8</span> <code>slice_*()</code></h3>
+<p>The <code>slice_sample()</code> function of the <code>dplyr</code> package will allow you to see a <strong>sample of random rows</strong> in random order.</p>
+<p>The number of rows to show is specified by the <code>n</code> argument.</p>
+<ul>
+<li>This can be useful if you <strong>do not want to print the entire tibble</strong>, but you want to get a greater sense of the values.</li>
+<li>This is a <strong>good option for data analysis reports</strong>, where printing the entire tibble would not be appropriate if the tibble is quite large.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_sample</span>(chicago, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 10
+   city   tmpd dewpoint date        pm25 pm10tmean2 o3tmean2 no2tmean2
+   &lt;chr&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1 chic   57       47.5 1990-09-16  NA         10.5    20.4       11.8
+ 2 chic   47.5     23.2 1988-04-12  NA         38      27.7       20.8
+ 3 chic   77       55.2 1998-07-29  16         20      34.1       15.2
+ 4 chic   66       50.7 1999-10-30  NA         68.5    38.7       23.1
+ 5 chic   42.5     40.6 1996-12-23  NA         17.6     2.07      25.0
+ 6 chic   68.5     57.8 1990-07-23  NA         36.5    20.2       26.3
+ 7 chic   77.5     70.4 1994-08-24  NA         59.4    33.7       31.6
+ 8 chic   64       46.9 1998-05-21   5.7       26      26.7       21.8
+ 9 chic   79       65.4 2003-07-03  24.0       71.5    35.3       34.7
+10 chic   57       49.1 2001-11-14  38.9       95       9.18      38.6
+# ℹ 2 more variables: pm25detrend &lt;dbl&gt;, year &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>You can also use <code>slice_head()</code> or <code>slice_tail()</code> to take a look at the top rows or bottom rows of your tibble. Again the number of rows can be specified with the <code>n</code> argument.</p>
+<p>This will show the first 5 rows.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_head</span>(chicago, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 10
+  city   tmpd dewpoint date        pm25 pm10tmean2 o3tmean2 no2tmean2
+  &lt;chr&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 chic     35     30.1 2005-12-31 15          23.5     2.53      13.2
+2 chic     36     31   2005-12-30 15.1        19.2     3.03      22.8
+3 chic     35     29.4 2005-12-29  7.45       23.5     6.79      20.0
+4 chic     37     34.5 2005-12-28 17.8        27.5     3.26      19.3
+5 chic     40     33.6 2005-12-27 23.6        27       4.47      23.5
+# ℹ 2 more variables: pm25detrend &lt;dbl&gt;, year &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>This will show the last 5 rows.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_tail</span>(chicago, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 10
+  city   tmpd dewpoint date        pm25 pm10tmean2 o3tmean2 no2tmean2
+  &lt;chr&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 chic   32       28.9 1987-01-05    NA       NA       4.75      30.3
+2 chic   29       28.6 1987-01-04    NA       47       4.38      30.4
+3 chic   33       27.4 1987-01-03    NA       34.2     3.33      23.8
+4 chic   33       29.9 1987-01-02    NA       NA       3.30      23.2
+5 chic   31.5     31.5 1987-01-01    NA       34       4.25      20.0
+# ℹ 2 more variables: pm25detrend &lt;dbl&gt;, year &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="the-ggplot2-plotting-system" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="the-ggplot2-plotting-system"><span class="header-section-number">3.6</span> The ggplot2 Plotting System</h2>
+<p>In this section, we will get into a little more of the nitty gritty of <strong>how <code>ggplot2</code> builds plots</strong> and how you can customize various aspects of any plot.</p>
+<section id="basic-components-of-a-ggplot2-plot" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="basic-components-of-a-ggplot2-plot"><span class="header-section-number">3.6.1</span> Basic components of a ggplot2 plot</h3>
+<p>A <strong><code>ggplot2</code> plot</strong> consists of a number of <strong>key components</strong>.</p>
+<ul>
+<li><p>A <strong>data frame</strong>: stores all of the data that will be displayed on the plot</p></li>
+<li><p><strong>aesthetic mappings</strong>: describe how data are mapped to color, size, shape, location</p></li>
+<li><p><strong>geoms</strong>: geometric objects like points, lines, shapes</p></li>
+<li><p><strong>facets</strong>: describes how conditional/panel plots should be constructed</p></li>
+<li><p><strong>stats</strong>: statistical transformations like binning, quantiles, smoothing</p></li>
+<li><p><strong>scales</strong>: what scale an aesthetic map uses (example: left-handed = red, right-handed = blue)</p></li>
+<li><p><strong>coordinate system</strong>: describes the system in which the locations of the geoms will be drawn</p></li>
+</ul>
+<p>It is <strong>essential to organize your data into a data frame</strong> before you start with <code>ggplot2</code> (and all the <strong>appropriate metadata</strong> so that your data frame is self-describing and your plots will be self-documenting).</p>
+<p>When <strong>building plots in <code>ggplot2</code></strong> (rather than using <code>qplot()</code>), the <strong>“artist’s palette” model may be the closest analogy</strong>.</p>
+<p>Essentially, you start with some raw data, and then you <strong>gradually add bits and pieces to it to create a plot</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Plots are built up in layers, with the typically ordering being</p>
+<ol type="1">
+<li>Plot the data</li>
+<li>Overlay a summary</li>
+<li>Add metadata and annotation</li>
+</ol>
+<p>For quick exploratory plots you may not get past step 1.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="building-up-in-layers" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="building-up-in-layers"><span class="header-section-number">3.7</span> Building up in layers</h2>
+<p>First, we can <strong>create a <code>ggplot</code> object</strong> that stores the dataset and the basic aesthetics for mapping the x- and y-coordinates for the plot.</p>
+<section id="palmerpenguins-dataset" class="level3" data-number="3.7.1">
+<h3 data-number="3.7.1" class="anchored" data-anchor-id="palmerpenguins-dataset"><span class="header-section-number">3.7.1</span> <code>palmerpenguins</code> dataset</h3>
+<p>Here we will use the <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a> dataset. These data contain observations for 344 penguins. There are 3 different species of penguins in this dataset, collected from 3 islands in the Palmer Archipelago, Antarctica.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="figure-caption">Palmer penguins</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>[<strong>Source</strong>: <a href="https://github.com/allisonhorst/stats-illustrations">Artwork by Allison Horst</a>]</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 344
+Columns: 8
+$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…
+$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …
+$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …
+$ flipper_length_mm &lt;int&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…
+$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …
+$ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male…
+$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
+</div>
+</div>
+<p>If we wanted to count the number of penguins for each of the three species, we can use the <code>count()</code> function in <code>dplyr</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  species       n
+  &lt;fct&gt;     &lt;int&gt;
+1 Adelie      152
+2 Chinstrap    68
+3 Gentoo      124</code></pre>
+</div>
+</div>
+<p>For example, we see there are a total of 152 Adelie penguins in the <code>palmerpenguins</code> dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, </span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> bill_length_mm))</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>data: species, island, bill_length_mm, bill_depth_mm,
+  flipper_length_mm, body_mass_g, sex, year [344x8]
+mapping:  x = ~flipper_length_mm, y = ~bill_length_mm
+faceting: &lt;ggproto object: Class FacetNull, Facet, gg&gt;
+    compute_layout: function
+    draw_back: function
+    draw_front: function
+    draw_labels: function
+    draw_panels: function
+    finish_data: function
+    init_scales: function
+    map_data: function
+    params: list
+    setup_data: function
+    setup_params: function
+    shrink: TRUE
+    train_scales: function
+    vars: function
+    super:  &lt;ggproto object: Class FacetNull, Facet, gg&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "gg"     "ggplot"</code></pre>
+</div>
+</div>
+<p>You can see above that the object <code>g</code> contains the dataset <code>penguins</code> and the mappings.</p>
+<p>Now, normally if you were to <code>print()</code> a <code>ggplot</code> object a plot would appear on the plot device, however, our object <code>g</code> actually does not contain enough information to make a plot yet.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, </span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> bill_length_mm))</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="tidyverse_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Nothing to see here!</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="first-plot-with-point-layer" class="level3" data-number="3.7.2">
+<h3 data-number="3.7.2" class="anchored" data-anchor-id="first-plot-with-point-layer"><span class="header-section-number">3.7.2</span> First plot with point layer</h3>
+<p>To make a scatter plot, we need add at least one <strong>geom</strong>, such as points.</p>
+<p>Here, we add the <code>geom_point()</code> function to create a traditional scatter plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, </span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> bill_length_mm))</span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="tidyverse_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How does ggplot know what points to plot? In this case, it can grab them from the data frame <code>penguins</code> that served as the input into the <code>ggplot()</code> function.</p>
+</section>
+<section id="adding-more-layers" class="level3" data-number="3.7.3">
+<h3 data-number="3.7.3" class="anchored" data-anchor-id="adding-more-layers"><span class="header-section-number">3.7.3</span> Adding more layers</h3>
+<section id="smooth" class="level4" data-number="3.7.3.1">
+<h4 data-number="3.7.3.1" class="anchored" data-anchor-id="smooth"><span class="header-section-number">3.7.3.1</span> smooth</h4>
+<p>Because the data appear rather noisy, it might be better if we added a smoother on top of the points to see if there is a trend in the data with PM2.5.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> </span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="tidyverse_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Scatterplot with smoother</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The default smoother is a loess smoother, which is flexible and nonparametric but might be too flexible for our purposes. Perhaps we’d prefer a simple linear regression line to highlight any first order trends. We can do this by specifying <code>method = "lm"</code> to <code>geom_smooth()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> </span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="tidyverse_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here, we can see there appears to be a increasing trend.</p>
+<p>We can color the points by <code>species</code> and a smoother by adding a linear regression.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, </span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> bill_length_mm, </span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> species)) <span class="sc">+</span> </span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="tidyverse_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="facets" class="level4" data-number="3.7.3.2">
+<h4 data-number="3.7.3.2" class="anchored" data-anchor-id="facets"><span class="header-section-number">3.7.3.2</span> facets</h4>
+<p>We can also stratify the scatter plot by another variable (e.g.&nbsp;<code>sex</code>) by <strong>adding a <code>facet_grid()</code></strong> or <code>facet_wrap()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">%&gt;%</span> </span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, </span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> bill_length_mm, </span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> species)) <span class="sc">+</span> </span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb101-7"><a href="#cb101-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb101-8"><a href="#cb101-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidyverse_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="changing-the-theme" class="level4" data-number="3.7.3.3">
+<h4 data-number="3.7.3.3" class="anchored" data-anchor-id="changing-the-theme"><span class="header-section-number">3.7.3.3</span> Changing the theme</h4>
+<p>The <strong>default theme for <code>ggplot2</code> uses the gray background</strong> with white grid lines.</p>
+<p>If you don’t find this suitable, you can use the black and white theme by using the <code>theme_bw()</code> function.</p>
+<p>The <code>theme_bw()</code> function also allows you to set the typeface for the plot, in case you don’t want the default Helvetica. Here we change the typeface to Times.</p>
+<p>For things that only make sense globally, use <code>theme()</code>, i.e.&nbsp;<code>theme(legend.position = "none")</code>. Two standard appearance themes are included</p>
+<ul>
+<li><code>theme_gray()</code>: The default theme (gray background)</li>
+<li><code>theme_bw()</code>: More stark/plain</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> </span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"Times"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="tidyverse_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="modifying-labels" class="level4" data-number="3.7.3.4">
+<h4 data-number="3.7.3.4" class="anchored" data-anchor-id="modifying-labels"><span class="header-section-number">3.7.3.4</span> Modifying labels</h4>
+<p>There are a variety of <strong>annotations</strong> you can add to a plot, including <strong>different kinds of labels</strong>.</p>
+<ul>
+<li><code>xlab()</code> for x-axis labels</li>
+<li><code>ylab()</code> for y-axis labels</li>
+<li><code>ggtitle()</code> for specifying plot titles</li>
+</ul>
+<p><code>labs()</code> function is generic and can be used to modify multiple types of labels at once</p>
+<p>:::</p>
+<p>Here is an example of modifying the title and the <code>x</code> and <code>y</code> labels to make the plot a bit more informative.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> </span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Palmer penguins"</span>, </span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"flipper length"</span>, </span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"bill length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="tidyverse_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Modifying plot labels</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="session-info" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="session-info"><span class="header-section-number">3.8</span> Session Info</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.1 (2023-06-16)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.0
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] palmerpenguins_0.1.1 here_1.0.1           lubridate_1.9.3     
+ [4] forcats_1.0.0        stringr_1.5.0        dplyr_1.1.3         
+ [7] purrr_1.0.2          readr_2.1.4          tidyr_1.3.0         
+[10] tibble_3.2.1         ggplot2_3.4.4        tidyverse_2.0.0     
+
+loaded via a namespace (and not attached):
+ [1] utf8_1.2.4        generics_0.1.3    lattice_0.22-5    stringi_1.7.12   
+ [5] hms_1.1.3         digest_0.6.33     magrittr_2.0.3    evaluate_0.22    
+ [9] grid_4.3.1        timechange_0.2.0  fastmap_1.1.1     Matrix_1.6-1.1   
+[13] rprojroot_2.0.3   jsonlite_1.8.7    mgcv_1.9-0        fansi_1.0.5      
+[17] scales_1.2.1      cli_3.6.1         rlang_1.1.1       crayon_1.5.2     
+[21] splines_4.3.1     bit64_4.0.5       munsell_0.5.0     withr_2.5.2      
+[25] yaml_2.3.7        tools_4.3.1       parallel_4.3.1    tzdb_0.4.0       
+[29] colorspace_2.1-0  vctrs_0.6.4       R6_2.5.1          lifecycle_1.0.3  
+[33] htmlwidgets_1.6.2 bit_4.0.5         vroom_1.6.4       pkgconfig_2.0.3  
+[37] pillar_1.9.0      gtable_0.3.4      glue_1.6.2        xfun_0.40        
+[41] tidyselect_1.2.0  rstudioapi_0.15.0 knitr_1.44        farver_2.1.1     
+[45] nlme_3.1-163      htmltools_0.5.6.1 rmarkdown_2.25    labeling_0.4.3   
+[49] compiler_4.3.1   </code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./exercises-02.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Group work</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./exercises-03.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Workshop</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

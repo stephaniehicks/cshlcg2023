@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Course material (lectures and workshops) from Stephanie Hicks">
+
+<title>CSHL Computational Genomics 2023 - 5&nbsp; Introduction to Bioconductor</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./intro-to-single-cell.html" rel="next">
+<link href="./exercises-03.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-to-bioc.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to Bioconductor</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">CSHL Computational Genomics 2023</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-to-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Group work</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducible-res.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reproducible Research</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Group work</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tidyverse and data viz</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Workshop</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-to-bioc.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to Bioconductor</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-to-single-cell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Overview of single-cell analysis in R/Bioconductor</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Workshop</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">5.1</span> Learning objectives</a></li>
+  <li><a href="#a-brief-history-of-bioconductor" id="toc-a-brief-history-of-bioconductor" class="nav-link" data-scroll-target="#a-brief-history-of-bioconductor"><span class="header-section-number">5.2</span> A brief history of Bioconductor</a></li>
+  <li><a href="#a-scientific-project" id="toc-a-scientific-project" class="nav-link" data-scroll-target="#a-scientific-project"><span class="header-section-number">5.3</span> A scientific project</a></li>
+  <li><a href="#a-package-repository" id="toc-a-package-repository" class="nav-link" data-scroll-target="#a-package-repository"><span class="header-section-number">5.4</span> A package repository</a></li>
+  <li><a href="#overview-and-relationship-to-cran" id="toc-overview-and-relationship-to-cran" class="nav-link" data-scroll-target="#overview-and-relationship-to-cran"><span class="header-section-number">5.5</span> Overview and relationship to CRAN</a></li>
+  <li><a href="#the-bioconductor-release-cycle" id="toc-the-bioconductor-release-cycle" class="nav-link" data-scroll-target="#the-bioconductor-release-cycle"><span class="header-section-number">5.6</span> The Bioconductor release cycle</a></li>
+  <li><a href="#package-types" id="toc-package-types" class="nav-link" data-scroll-target="#package-types"><span class="header-section-number">5.7</span> Package types</a></li>
+  <li><a href="#online-communication-channels" id="toc-online-communication-channels" class="nav-link" data-scroll-target="#online-communication-channels"><span class="header-section-number">5.8</span> Online communication channels</a>
+  <ul class="collapse">
+  <li><a href="#support-site" id="toc-support-site" class="nav-link" data-scroll-target="#support-site"><span class="header-section-number">5.8.1</span> Support site</a></li>
+  <li><a href="#slack-workspace" id="toc-slack-workspace" class="nav-link" data-scroll-target="#slack-workspace"><span class="header-section-number">5.8.2</span> Slack workspace</a></li>
+  <li><a href="#developer-mailing-list" id="toc-developer-mailing-list" class="nav-link" data-scroll-target="#developer-mailing-list"><span class="header-section-number">5.8.3</span> Developer Mailing List</a></li>
+  <li><a href="#a-scientific-and-technical-community" id="toc-a-scientific-and-technical-community" class="nav-link" data-scroll-target="#a-scientific-and-technical-community"><span class="header-section-number">5.8.4</span> A scientific and technical community</a></li>
+  </ul></li>
+  <li><a href="#getting-started-with-bioconductor" id="toc-getting-started-with-bioconductor" class="nav-link" data-scroll-target="#getting-started-with-bioconductor"><span class="header-section-number">5.9</span> Getting started with Bioconductor</a>
+  <ul class="collapse">
+  <li><a href="#working-with-bioconductor-objects" id="toc-working-with-bioconductor-objects" class="nav-link" data-scroll-target="#working-with-bioconductor-objects"><span class="header-section-number">5.9.1</span> Working with Bioconductor objects</a></li>
+  <li><a href="#summarizedexperiment-se" id="toc-summarizedexperiment-se" class="nav-link" data-scroll-target="#summarizedexperiment-se"><span class="header-section-number">5.9.2</span> SummarizedExperiment (SE)</a></li>
+  <li><a href="#using-the-ranges-of-a-se" id="toc-using-the-ranges-of-a-se" class="nav-link" data-scroll-target="#using-the-ranges-of-a-se"><span class="header-section-number">5.9.3</span> Using the ranges of a SE</a></li>
+  <li><a href="#downloading-se-data" id="toc-downloading-se-data" class="nav-link" data-scroll-target="#downloading-se-data"><span class="header-section-number">5.9.4</span> Downloading SE data</a></li>
+  <li><a href="#visualizing-count-matrix-data-in-a-se" id="toc-visualizing-count-matrix-data-in-a-se" class="nav-link" data-scroll-target="#visualizing-count-matrix-data-in-a-se"><span class="header-section-number">5.9.5</span> Visualizing count matrix data in a SE</a></li>
+  </ul></li>
+  <li><a href="#singlecellexperiment" id="toc-singlecellexperiment" class="nav-link" data-scroll-target="#singlecellexperiment"><span class="header-section-number">5.10</span> SingleCellExperiment</a></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">5.11</span> Session Info</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to Bioconductor</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="learning-objectives" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">5.1</span> Learning objectives</h2>
+<ol type="1">
+<li>Describe what is the Bioconductor and how it’s different than CRAN</li>
+<li>Describe the package types in Bioconductor</li>
+<li>Recognize and work with core Bioconductor objects including <code>SummarizedExperiment</code></li>
+<li>Be able to perform a basic differential expression analysis with bulk RNA-seq</li>
+<li>Introduce the core Bioconductor object called <code>SingleCellExperiment</code>.</li>
+</ol>
+</section>
+<section id="a-brief-history-of-bioconductor" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="a-brief-history-of-bioconductor"><span class="header-section-number">5.2</span> A brief history of Bioconductor</h2>
+<p>The Bioconductor project was <strong>started in the Fall of 2001</strong>, as an initiative for the collaborative creation of extensible software for computational biology and bioinformatics.</p>
+<p>The <strong>goal of the project</strong> is to develop tools for the statistical analysis and comprehension of large datasets and technological artifacts in rigorously and robustly designed experiments. Beyond statistical analyses, the interpretation of statistical results is supported by packages providing biological context, visualization, and reproducibility.</p>
+<p>Over the years, software packages contributed to the Bioconductor project have reflected the evolution and emergence of several high-throughput technologies, from microarrays to single-cell genomics, through <strong>many variations of sequencing experiments</strong> (e.g., RNA-seq, ChIP-seq, DNA-seq), analyses (e.g., sequence variation, copy number variation, single nucleotide polymorphisms), and data modalities (e.g., flow cytometry, proteomics, microscropy and image analysis).</p>
+<p>The Bioconductor project culminates at an <strong>annual conference in North America in the summer</strong>, while regional conferences offer great opportunities for networking in Europe, Asia, and North America.</p>
+<p>The project is <strong>committed to promote a diverse and inclusive community</strong>, including a <a href="https://www.bioconductor.org/about/code-of-conduct/">Code of Conduct</a> enforced by a Code of Conduct committee.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/carpentries-incubator/bioc-project/raw/main/fig/bioc-timeline.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Timeline of major Bioconductor milestones alongside technological advancements.</figcaption>
+</figure>
+</div>
+<p><strong>Timeline of major Bioconductor milestones alongside technological advancements.</strong> Above the timeline, the figure marks the first occurrence of major events. Within the timeline, the name of packages providing core infrastructure indicate the release date. Below the timeline, major technological advancements contextualise the evolution of the Bioconductor project over time.</p>
+</section>
+<section id="a-scientific-project" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="a-scientific-project"><span class="header-section-number">5.3</span> A scientific project</h2>
+<ul>
+<li><p>The original publication describes the aims and methods of the project at its inception is Gentleman et al.&nbsp;(2004).</p></li>
+<li><p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4509590">Huber et al.&nbsp;(2015)</a> illustrates the progression of the project, including descriptions of core infrastructure and case studies, from the perspective of both users and developers.</p></li>
+<li><p><a href="https://pubmed.ncbi.nlm.nih.gov/31792435">Amezquita et al.&nbsp;(2020)</a> reviewed further developments of the project in the wake of single-cell genomics technologies.</p></li>
+</ul>
+<p>Many more publications and book chapters cite the Bioconductor project, with recent example listed on the <a href="https://www.bioconductor.org/help/publications/">Bioconductor website</a>.</p>
+<p>In addition, there is a <strong>core team</strong> which is supported by an NIH grant, and developers who contribute to the open source Bioconductor packages.</p>
+</section>
+<section id="a-package-repository" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="a-package-repository"><span class="header-section-number">5.4</span> A package repository</h2>
+</section>
+<section id="overview-and-relationship-to-cran" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="overview-and-relationship-to-cran"><span class="header-section-number">5.5</span> Overview and relationship to CRAN</h2>
+<p>Undoubtedly, <strong>software packages are the best-known aspect of the Bioconductor project</strong>. Since its inception in 2001, the repository has grown over time to host thousands of packages.</p>
+<p>The Bioconductor project has extended the preexisting CRAN repository – much larger and general-purpose in scope – to comprise R packages primarily catering for bioinformatics and computational biology analyses.</p>
+</section>
+<section id="the-bioconductor-release-cycle" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="the-bioconductor-release-cycle"><span class="header-section-number">5.6</span> The Bioconductor release cycle</h2>
+<p>The Bioconductor project also extended the packaging infrastructure of the CRAN repository to better support the deployment and management of packages at the user level.</p>
+<p>In particular, the <strong>Bioconductor projects features a 6-month release cycle</strong> (typically around April and October), which sees a snapshot of the current version of all packages in the Bioconductor repository earmarked for a specific version of R.</p>
+<p><strong>R itself is released on an annual basis</strong> (typically around April), meaning that for each release of R, two compatible releases of Bioconductor packages are available.</p>
+<ul>
+<li><p>As such, <strong>Bioconductor package developers are required to always use the version of R that will be associated with the next release of the Bioconductor</strong> project.</p></li>
+<li><p>This means using the development version of R between October and April, and the release version of R between April and October.</p></li>
+</ul>
+<p>Why? The strict Bioconductor release cycle <strong>prevents users from installing temporally distant versions of packages</strong> that were very likely never tested together.</p>
+<p>This practice <strong>reflects the development cycle of packages of both CRAN and Bioconductor</strong>, where contemporaneous packages are regularly tested by automated systems to ensure that the latest software updates in package dependencies do not break downstream packages, or prompts those package maintainers to update their own software as a consequence.</p>
+<p>Prior to each Bioconductor release, packages that do not pass the requires suites of automated tests are deprecated and subsequently removed from the repository.</p>
+<p>This <strong>ensures that each Bioconductor release</strong> provides a suite of packages that are mutually compatible, traceable, and guaranteed to function for the associated version of R.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/carpentries-incubator/bioc-project/raw/main/fig/bioc-release-cycle.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Timeline of release dates for selected Bioconductor and R versions.</figcaption>
+</figure>
+</div>
+<p><strong>Timeline of release dates for selected Bioconductor and R versions.</strong> The upper section of the timeline indicates versions and approximate release dates for the R project. The lower section of the timeline indicates versions and release dates for the Bioconductor project. Source: <a href="https://bioconductor.org/about/release-announcements/">Bioconductor</a>.</p>
+</section>
+<section id="package-types" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="package-types"><span class="header-section-number">5.7</span> Package types</h2>
+<p>Packages are broadly divided in four major categories:</p>
+<ol type="1">
+<li>software</li>
+<li>annotation data</li>
+<li>experiment data</li>
+<li>workflows</li>
+</ol>
+<p><strong>Software packages</strong> themselves can be subdivided into packages that</p>
+<ul>
+<li>provide <strong>infrastructure</strong> (i.e., classes) to store and access data</li>
+<li>packages that provide <strong>methodological tools</strong> to process data stored in those data structures</li>
+</ul>
+<p>This <strong>separation of structure and analysis</strong> is at the core of the Bioconductor project, encouraging developers of new methodological software packages to thoughtfully re-use existing data containers where possible, and <strong>reducing the cognitive burden</strong> imposed on users who can more easily experiment with alternative workflows without the need to learn and convert between different data structures.</p>
+<p><strong>Annotation data packages</strong> provide self-contained databases of diverse genomic annotations (e.g., gene identifiers, biological pathways).</p>
+<ul>
+<li>Different collections of annotation packages can be found in the Bioconductor project.</li>
+<li>They are identifiable by their respective naming pattern, and the information that they contain.</li>
+</ul>
+<p>For instance, the so-called <code>OrgDb</code> packages (e.g., the <em><a href="https://bioconductor.org/packages/3.17/org.Hs.eg.db">org.Hs.eg.db</a></em> package) provide information mapping different types of gene identifiers and pathway databases; the so-called <code>EnsDb</code> (e.g., <em><a href="https://bioconductor.org/packages/3.17/EnsDb.Hsapiens.v86">EnsDb.Hsapiens.v86</a></em>) packages encapsulate individual versions of the Ensembl annotations in Bioconductor packages; and the so-called <code>TxDb</code> packages (e.g., <em><a href="https://bioconductor.org/packages/3.17/TxDb.Hsapiens.UCSC.hg38.knownGene">TxDb.Hsapiens.UCSC.hg38.knownGene</a></em>) encapsulate individual versions UCSC gene annotation tables.</p>
+<p><strong>Experiment data packages</strong> provide self-contained datasets that are often used by software package developers to demonstrate the use of their package on well-known standard datasets in their <strong>package vignettes</strong>.</p>
+<p>Finally, <strong>workflow packages</strong> exclusively provide collections of vignettes that demonstrate the combined usage of several other packages as a coherent workflow, but do not provide any new source code or functionality themselves.</p>
+</section>
+<section id="online-communication-channels" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="online-communication-channels"><span class="header-section-number">5.8</span> Online communication channels</h2>
+<section id="support-site" class="level3" data-number="5.8.1">
+<h3 data-number="5.8.1" class="anchored" data-anchor-id="support-site"><span class="header-section-number">5.8.1</span> Support site</h3>
+<p>The Bioconductor <a href="https://support.bioconductor.org/">support site</a> provides a platform where users and developers can communicate freely (following the Bioconductor <a href="https://www.bioconductor.org/about/code-of-conduct/">Code of Conduct</a>) to discuss issues on a range of subjects, ranging from packages to conceptual questions about best practices.</p>
+</section>
+<section id="slack-workspace" class="level3" data-number="5.8.2">
+<h3 data-number="5.8.2" class="anchored" data-anchor-id="slack-workspace"><span class="header-section-number">5.8.2</span> Slack workspace</h3>
+<p>The Bioconductor <a href="https://bioc-community.herokuapp.com/">Slack workspace</a> is an open space that all community members are welcome to join (for free) and use for rapid interactions. Currently, the “Pro” pricing plan kindly supported by core funding provides:</p>
+<ul>
+<li>Unlimited message archive</li>
+<li>Unlimited apps</li>
+<li>Group video calls with screen sharing</li>
+<li>Work securely with other organizations using Slack Connect</li>
+</ul>
+<p>A wide range of channels have been created to discuss a range of subjects, and community members can freely join the discussion on those channels of create new ones to discuss new subjects.</p>
+<p>Important announcements are posted on the <code>#general</code> channel.</p>
+</section>
+<section id="developer-mailing-list" class="level3" data-number="5.8.3">
+<h3 data-number="5.8.3" class="anchored" data-anchor-id="developer-mailing-list"><span class="header-section-number">5.8.3</span> Developer Mailing List</h3>
+<p>The <a href="mailto:bioc-devel@r-project.org" class="email">bioc-devel@r-project.org</a> mailing list is used for communication between package developers, and announcements from the Biocondutor core team.</p>
+</section>
+<section id="a-scientific-and-technical-community" class="level3" data-number="5.8.4">
+<h3 data-number="5.8.4" class="anchored" data-anchor-id="a-scientific-and-technical-community"><span class="header-section-number">5.8.4</span> A scientific and technical community</h3>
+<ul>
+<li><a href="https://bioconductor.org/about/scientific-advisory-board/">Scientific Advisory Board (SAB)</a> Meet Annually, External and Internal leader in the field who act as project advisors. No Term limits.</li>
+<li><a href="https://bioconductor.org/about/technical-advisory-board/">Technical Advisory Board (TAB)</a>. Meet monthly to consider technical aspects of core infastructure and scientific direction of the project. 15 members, 3 year term. Annual open-to-all elections to rotate members. Current officers are Vince Carey (chair), Levi Waldron (vice Chair) Charlotte Soneson (Secretary).</li>
+<li><a href="https://bioconductor.org/about/community-advisory-board/">Community Advisory Board (CAB)</a> Meet monthly to consider community outreach, events, education and training. 15 members, 3 year term. Annual open-to-all elections to rotate members. Current officers are Aedin Culhane (chair), Matt Ritchie (co Chair), Lori Kern (Secretary).</li>
+<li><a href="https://www.bioconductor.org/about/code-of-conduct/">Code of Conduct committee</a></li>
+</ul>
+</section>
+</section>
+<section id="getting-started-with-bioconductor" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="getting-started-with-bioconductor"><span class="header-section-number">5.9</span> Getting started with Bioconductor</h2>
+<p>Before we get started, you need to know how to install Bioconductor packages. The most important details are:</p>
+<ul>
+<li>Bioconductor is a package repository, like CRAN</li>
+<li>All Bioconductor packages <strong>must</strong> be installed following the instructions here: <a href="https://bioconductor.org/install" class="uri">https://bioconductor.org/install</a></li>
+<li>Bioconductor packages are linked in their versions, both to each other and to the version of R</li>
+<li>Bioconductor’s installation function will look up your version of R and give you the appropriate versions of Bioconductor packages</li>
+<li>If you want the latest version of Bioconductor, you need to use the latest version of R.</li>
+</ul>
+<p>How do you know if a package is a Bioconductor package?</p>
+<p>For one thing, you can just <strong>google the package name</strong> and you will see either CRAN or Bioconductor as a first result (packages must be in one or the other, they are not allowed to be on both repositories).</p>
+<p>But also, you can use Bioconductor’s installation function to install any packages, even ones on CRAN.</p>
+<p>By the way, you can install multiple packages at once by making a string vector: <code>BiocManager::install(c("foo","bar"))</code></p>
+<section id="working-with-bioconductor-objects" class="level3" data-number="5.9.1">
+<h3 data-number="5.9.1" class="anchored" data-anchor-id="working-with-bioconductor-objects"><span class="header-section-number">5.9.1</span> Working with Bioconductor objects</h3>
+<p>Bioconductor’s infrastructure is <strong>built up of object classes</strong>.</p>
+<p>An example of a class is <strong>GRanges</strong> (stands for “genomic ranges”), which is a way to specify a set of ranges in a particular genome, e.g.&nbsp;from basepair 101 to basepair 200 on chromosome 1 of the human genome (version 38).</p>
+<p>What’s an object?</p>
+<p>Well <strong>everything in R is an object</strong>, but usually when we talk about Bioconductor objects, we mean data structures containing many attributes, so more complex than a vector or matrix.</p>
+<p>And the objects have specific <strong>methods</strong> that help you either access the information in the object, run analyses on the object, plot the object, etc.</p>
+<p>Bioconductor also allows for <strong>class hierarchy</strong>, which means that you can define a class of object that inherits the structure and methods of a <strong>superclass</strong> on which it depends. This last point is mostly important for people who are developing new software for Bioconductor (maybe that’s you!)</p>
+<p>We will introduce the core Bioconductor objects here.</p>
+</section>
+<section id="summarizedexperiment-se" class="level3" data-number="5.9.2">
+<h3 data-number="5.9.2" class="anchored" data-anchor-id="summarizedexperiment-se"><span class="header-section-number">5.9.2</span> SummarizedExperiment (SE)</h3>
+<p>First, we will discuss one of the most important classes of object, which is the <em>SummarizedExperiment</em>, or SE.</p>
+<p>SEs have the structure:</p>
+<ul>
+<li>a matrix of data, rows are genomic features, and columns are samples</li>
+<li>a table of data about the samples (columns)</li>
+<li>a table of data about the features (rows)</li>
+</ul>
+<p>A diagram of this 3-part structure can be found <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4509590/figure/F2/">here</a>.</p>
+<p>In SE, the 3 parts of the object are called 1) <code>assay</code>, 2) <code>colData</code> and 3) <code>rowData</code> or <code>rowRanges</code>.</p>
+<p><strong>Note</strong>: There was a class of object that came before the SE, called the <strong>ExpressionSet</strong>, which was used primarily to store <strong>microarray</strong> data.</p>
+<p>Here we will skip over the <strong>ExpressionSet</strong>, and just look at SEs.</p>
+<p>It helps to start by making a small toy SE, to see how the pieces come together. (Often you won’t make an SE manually, but it will be downloaded from an external source, or generated by a function that you call, e.g.&nbsp;the <em><a href="https://bioconductor.org/packages/3.17/tximeta">tximeta</a></em> or some other data loading function.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SummarizedExperiment)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>col_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sample=</span><span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">condition=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>,<span class="st">"C"</span>)),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">treated=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,<span class="dv">3</span>)))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>col_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sample condition treated
+1      1         A       0
+2      2         A       1
+3      3         B       0
+4      4         B       1
+5      5         C       0
+6      6         C       1</code></pre>
+</div>
+</div>
+<p>An important aspect of SEs is that the rows can optionally correspond to particular set of <strong>GRanges</strong></p>
+<ul>
+<li>e.g.&nbsp;a row of an SE could give the number of RNA-seq reads that can be assigned to a particular gene, and the row could also have metadata in the 3rd slot including, e.g.&nbsp;location of the gene in the genome.</li>
+</ul>
+<p>In this case, we use the <code>rowRanges</code> slot to specify the information.</p>
+<p>If we don’t have ranges, we can just put a table on the “side” of the SE by specifying <code>rowData</code>.</p>
+<p>I will show in the example though how to provide <code>rowRanges</code>.</p>
+<p>Let’s <strong>use the first 10 genes in the Ensembl database</strong> for human.</p>
+<p>The following code loads a database, pulls out all the genes (as <em>GRanges</em>), removes extra “non-standard” chromosomes, and then subsets to the first 10 genes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EnsDb.Hsapiens.v86)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>txdb <span class="ot">&lt;-</span> EnsDb.Hsapiens.v86</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">genes</span>(txdb)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">keepStandardChromosomes</span>(g, <span class="at">pruning.mode=</span><span class="st">"coarse"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>row_ranges <span class="ot">&lt;-</span> g[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We will make up some simulated “expression” measurements, and then store these in the SE.</p>
+<p>I call <code>list</code> so I can name the matrix, otherwise it would not be named.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>exprs <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">10</span>), <span class="at">ncol=</span><span class="dv">6</span>, <span class="at">nrow=</span><span class="dv">10</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">SummarizedExperiment</span>(<span class="at">assay =</span> <span class="fu">list</span>(<span class="st">"exprs"</span> <span class="ot">=</span> exprs),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">colData =</span> col_data,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">rowRanges =</span> row_ranges)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>se</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: RangedSummarizedExperiment 
+dim: 10 6 
+metadata(0):
+assays(1): exprs
+rownames(10): ENSG00000223972 ENSG00000227232 ... ENSG00000238009
+  ENSG00000239945
+rowData names(6): gene_id gene_name ... symbol entrezid
+colnames: NULL
+colData names(3): sample condition treated</code></pre>
+</div>
+</div>
+<p>We see this object has one named matrix. The object could have multiple matrices (as long as these are the same shape).</p>
+<p>In that case you could access the first with <code>assay</code> and in general by name, e.g.&nbsp;<code>assay(se, "exprs")</code> or equivalently <code>assays(se)[["exprs"]]</code> .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assayNames</span>(se)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "exprs"</code></pre>
+</div>
+</div>
+<p>Finally, if we wanted to add data onto the rows, for example, the score of a test on the matrix data, we use the metadata columns function, or <code>mcols</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(se)<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mcols</span>(se)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 10 rows and 7 columns
+                        gene_id    gene_name           gene_biotype
+                    &lt;character&gt;  &lt;character&gt;            &lt;character&gt;
+ENSG00000223972 ENSG00000223972      DDX11L1 transcribed_unproces..
+ENSG00000227232 ENSG00000227232       WASH7P unprocessed_pseudogene
+ENSG00000278267 ENSG00000278267    MIR6859-1                  miRNA
+ENSG00000243485 ENSG00000243485    MIR1302-2                lincRNA
+ENSG00000237613 ENSG00000237613      FAM138A                lincRNA
+ENSG00000268020 ENSG00000268020       OR4G4P unprocessed_pseudogene
+ENSG00000240361 ENSG00000240361      OR4G11P unprocessed_pseudogene
+ENSG00000186092 ENSG00000186092        OR4F5         protein_coding
+ENSG00000238009 ENSG00000238009 RP11-34P13.7                lincRNA
+ENSG00000239945 ENSG00000239945 RP11-34P13.8                lincRNA
+                seq_coord_system       symbol                       entrezid
+                     &lt;character&gt;  &lt;character&gt;                         &lt;list&gt;
+ENSG00000223972       chromosome      DDX11L1 100287596,100287102,727856,...
+ENSG00000227232       chromosome       WASH7P                             NA
+ENSG00000278267       chromosome    MIR6859-1                      102466751
+ENSG00000243485       chromosome    MIR1302-2            105376912,100302278
+ENSG00000237613       chromosome      FAM138A           654835,645520,641702
+ENSG00000268020       chromosome       OR4G4P                             NA
+ENSG00000240361       chromosome      OR4G11P                             NA
+ENSG00000186092       chromosome        OR4F5                          79501
+ENSG00000238009       chromosome RP11-34P13.7                             NA
+ENSG00000239945       chromosome RP11-34P13.8                             NA
+                    score
+                &lt;numeric&gt;
+ENSG00000223972  0.919522
+ENSG00000227232  1.648822
+ENSG00000278267 -0.941614
+ENSG00000243485 -0.990802
+ENSG00000237613 -0.446503
+ENSG00000268020  0.678977
+ENSG00000240361 -1.015432
+ENSG00000186092 -0.867000
+ENSG00000238009 -0.300285
+ENSG00000239945 -0.584982</code></pre>
+</div>
+</div>
+<p>Adding data to the column metadata is even easier, we can just use <code>$</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>se<span class="sc">$</span>librarySize <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">6</span>,<span class="fl">1e6</span>,<span class="fl">2e6</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 6 rows and 4 columns
+    sample condition  treated librarySize
+  &lt;factor&gt;  &lt;factor&gt; &lt;factor&gt;   &lt;numeric&gt;
+1        1         A        0     1960730
+2        2         A        1     1741090
+3        3         B        0     1006700
+4        4         B        1     1808028
+5        5         C        0     1811178
+6        6         C        1     1901476</code></pre>
+</div>
+</div>
+</section>
+<section id="using-the-ranges-of-a-se" class="level3" data-number="5.9.3">
+<h3 data-number="5.9.3" class="anchored" data-anchor-id="using-the-ranges-of-a-se"><span class="header-section-number">5.9.3</span> Using the ranges of a SE</h3>
+<p>How does this additional functionality of the <code>rowRanges</code> facilitate faster data analysis?</p>
+<p>Suppose we are working with another data set besides <code>se</code> and we find a region of interest on chromsome 1.</p>
+<p>If we want to pull out the expression data for that region, we just ask for the subset of <code>se</code> that overlaps.</p>
+<p>First, we <strong>build the query region</strong>, and then use the <strong>GRanges</strong> function <code>overlapsAny()</code> within single square brackets (like you would subset any matrix-like object):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="fu">GRanges</span>(<span class="st">"1"</span>, <span class="fu">IRanges</span>(<span class="dv">25000</span>,<span class="dv">40000</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>se_sub <span class="ot">&lt;-</span> se[<span class="fu">overlapsAny</span>(se, query), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We could have equivalently used the shorthand code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>se_sub <span class="ot">&lt;-</span> se[se <span class="sc">%over%</span> query,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We get just three ranges, and three rows of the SE:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowRanges</span>(se_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 3 ranges and 7 metadata columns:
+                  seqnames      ranges strand |         gene_id   gene_name
+                     &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; |     &lt;character&gt; &lt;character&gt;
+  ENSG00000227232        1 14404-29570      - | ENSG00000227232      WASH7P
+  ENSG00000243485        1 29554-31109      + | ENSG00000243485   MIR1302-2
+  ENSG00000237613        1 34554-36081      - | ENSG00000237613     FAM138A
+                            gene_biotype seq_coord_system      symbol
+                             &lt;character&gt;      &lt;character&gt; &lt;character&gt;
+  ENSG00000227232 unprocessed_pseudogene       chromosome      WASH7P
+  ENSG00000243485                lincRNA       chromosome   MIR1302-2
+  ENSG00000237613                lincRNA       chromosome     FAM138A
+                              entrezid     score
+                                &lt;list&gt; &lt;numeric&gt;
+  ENSG00000227232                 &lt;NA&gt;  1.648822
+  ENSG00000243485  105376912,100302278 -0.990802
+  ENSG00000237613 654835,645520,641702 -0.446503
+  -------
+  seqinfo: 25 sequences (1 circular) from GRCh38 genome</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(se_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      [,1]       [,2]       [,3]       [,4]       [,5]
+ENSG00000227232  0.4620206 -0.2642701  2.9981278 -1.5187187  0.5381596
+ENSG00000243485  1.0155080 -1.8298211  0.9321233  0.3247443  0.5470970
+ENSG00000237613 -0.2766870 -0.8681559 -0.2705575  1.5609302 -0.2008953
+                      [,6]
+ENSG00000227232 -0.4973110
+ENSG00000243485  0.6077315
+ENSG00000237613 -1.0156904</code></pre>
+</div>
+</div>
+<p>Another useful property is that we know metadata about the chromosomes, and the version of the genome.</p>
+<ul>
+<li><strong>Note</strong>: If you were not yet aware, the basepair position of a given feature, say gene <em>XYZ</em>, will change between versions of the genome, as sequences are added or rearranged.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seqinfo</span>(se)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Seqinfo object with 25 sequences (1 circular) from GRCh38 genome:
+  seqnames seqlengths isCircular genome
+  1         248956422      FALSE GRCh38
+  10        133797422      FALSE GRCh38
+  11        135086622      FALSE GRCh38
+  12        133275309      FALSE GRCh38
+  13        114364328      FALSE GRCh38
+  ...             ...        ...    ...
+  8         145138636      FALSE GRCh38
+  9         138394717      FALSE GRCh38
+  MT            16569       TRUE GRCh38
+  X         156040895      FALSE GRCh38
+  Y          57227415      FALSE GRCh38</code></pre>
+</div>
+</div>
+</section>
+<section id="downloading-se-data" class="level3" data-number="5.9.4">
+<h3 data-number="5.9.4" class="anchored" data-anchor-id="downloading-se-data"><span class="header-section-number">5.9.4</span> Downloading SE data</h3>
+<p>Let’s download a SE object from <a href="https://jhubiostatistics.shinyapps.io/recount/">recount2</a>, which performs a basic summarization of public data sets with gene expression data.</p>
+<p>This <strong>dataset contains RNA-seq samples from human airway epithelial cell cultures</strong>.</p>
+<p>The paper is <a href="https://www.ncbi.nlm.nih.gov/pubmed/25706956">here</a>. The structure of the experiment was that, cell cultures from 6 asthmatic and 6 non-asthmatics donors were treated with viral infection or left untreated (controls).</p>
+<p>So we have 2 samples (control or treated) for each of the 12 donors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at /Users/stephaniehicks/Documents/github/teaching/cshlcg2023</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tests if a directory named "data" exists locally</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="fu">here</span>(<span class="st">"data"</span>))) { <span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"data"</span>)) }</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="st">"asthma.rda"</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">"data"</span>, file))){</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">&lt;-</span> <span class="st">"http://duffel.rail.bio/recount/SRP046226/rse_gene.Rdata"</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(url, <span class="fu">here</span>(<span class="st">"data"</span>, file))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">here</span>(<span class="st">"data"</span>, file))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We use a custom function to produce a matrix which a count of RNA fragments for each gene (rows) and each sample (columns).</p>
+<p>(Recount project calls these objects <code>rse</code> for <strong>RangedSummarizedExperiment</strong>, meaning it has <code>rowRanges</code> information.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>my_scale_counts <span class="ot">&lt;-</span> <span class="cf">function</span>(rse_gene, <span class="at">round=</span><span class="cn">TRUE</span>) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  cts <span class="ot">&lt;-</span> <span class="fu">assays</span>(rse_gene)<span class="sc">$</span>counts</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># mapped_read_count includes the count for both reads of a pair</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  paired <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">colData</span>(rse_gene)<span class="sc">$</span>paired_end, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> (<span class="fu">colData</span>(rse_gene)<span class="sc">$</span>mapped_read_count <span class="sc">/</span> paired) <span class="sc">/</span> <span class="fu">colSums</span>(cts)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assays</span>(rse_gene)<span class="sc">$</span>counts <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">t</span>(<span class="fu">assays</span>(rse_gene)<span class="sc">$</span>counts) <span class="sc">*</span> x)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (round) {</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">assays</span>(rse_gene)<span class="sc">$</span>counts <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">assays</span>(rse_gene)<span class="sc">$</span>counts)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  rse_gene</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>rse <span class="ot">&lt;-</span> <span class="fu">my_scale_counts</span>(rse_gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can take a peek at the column data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(rse)[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 24 rows and 6 columns
+               project      sample  experiment         run
+           &lt;character&gt; &lt;character&gt; &lt;character&gt; &lt;character&gt;
+SRR1565926   SRP046226   SRS694613   SRX692912  SRR1565926
+SRR1565927   SRP046226   SRS694614   SRX692913  SRR1565927
+SRR1565928   SRP046226   SRS694615   SRX692914  SRR1565928
+SRR1565929   SRP046226   SRS694616   SRX692915  SRR1565929
+SRR1565930   SRP046226   SRS694617   SRX692916  SRR1565930
+...                ...         ...         ...         ...
+SRR1565945   SRP046226   SRS694632   SRX692931  SRR1565945
+SRR1565946   SRP046226   SRS694633   SRX692932  SRR1565946
+SRR1565947   SRP046226   SRS694634   SRX692933  SRR1565947
+SRR1565948   SRP046226   SRS694635   SRX692934  SRR1565948
+SRR1565949   SRP046226   SRS694636   SRX692935  SRR1565949
+           read_count_as_reported_by_sra reads_downloaded
+                               &lt;integer&gt;        &lt;integer&gt;
+SRR1565926                      12866750         12866750
+SRR1565927                      12797108         12797108
+SRR1565928                      13319016         13319016
+SRR1565929                      13725752         13725752
+SRR1565930                      10882416         10882416
+...                                  ...              ...
+SRR1565945                      13791854         13791854
+SRR1565946                      13480842         13480842
+SRR1565947                      13166594         13166594
+SRR1565948                      13320398         13320398
+SRR1565949                      13002276         13002276</code></pre>
+</div>
+</div>
+<p>The information we are interested in is contained in the <code>characteristics</code> column (which is a character list).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rse<span class="sc">$</span>characteristics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "CompressedCharacterList"
+attr(,"package")
+[1] "IRanges"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>rse<span class="sc">$</span>characteristics[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CharacterList of length 3
+[[1]] cell type: Isolated from human trachea-bronchial tissues ...
+[[2]] cell type: Isolated from human trachea-bronchial tissues ...
+[[3]] cell type: Isolated from human trachea-bronchial tissues ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>rse<span class="sc">$</span>characteristics[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "cell type: Isolated from human trachea-bronchial tissues"
+[2] "passages: 2"                                             
+[3] "disease state: asthmatic"                                
+[4] "treatment: HRV16"                                        </code></pre>
+</div>
+</div>
+<p>We can pull out the 3 and 4 element using the <code>sapply</code> function and the square bracket function.</p>
+<p>I know this syntax looks a little funny, but it’s really just saying, use the single square bracket, pull out the third element (or fourth element).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>rse<span class="sc">$</span>condition <span class="ot">&lt;-</span> <span class="fu">sapply</span>(rse<span class="sc">$</span>characteristics, <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">3</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>rse<span class="sc">$</span>treatment <span class="ot">&lt;-</span> <span class="fu">sapply</span>(rse<span class="sc">$</span>characteristics, <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">4</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rse<span class="sc">$</span>condition, rse<span class="sc">$</span>treatment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                              
+                               treatment: HRV16 treatment: Vehicle
+  disease state: asthmatic                    6                  6
+  disease state: non-asthmatic                6                  6</code></pre>
+</div>
+</div>
+<p>Let’s see what the <code>rowRanges</code> of this experiment look like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowRanges</span>(rse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GRanges object with 58037 ranges and 3 metadata columns:
+                     seqnames              ranges strand |            gene_id
+                        &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |        &lt;character&gt;
+  ENSG00000000003.14     chrX 100627109-100639991      - | ENSG00000000003.14
+   ENSG00000000005.5     chrX 100584802-100599885      + |  ENSG00000000005.5
+  ENSG00000000419.12    chr20   50934867-50958555      - | ENSG00000000419.12
+  ENSG00000000457.13     chr1 169849631-169894267      - | ENSG00000000457.13
+  ENSG00000000460.16     chr1 169662007-169854080      + | ENSG00000000460.16
+                 ...      ...                 ...    ... .                ...
+   ENSG00000283695.1    chr19   52865369-52865429      - |  ENSG00000283695.1
+   ENSG00000283696.1     chr1 161399409-161422424      + |  ENSG00000283696.1
+   ENSG00000283697.1     chrX 149548210-149549852      - |  ENSG00000283697.1
+   ENSG00000283698.1     chr2 112439312-112469687      - |  ENSG00000283698.1
+   ENSG00000283699.1    chr10   12653138-12653197      - |  ENSG00000283699.1
+                     bp_length          symbol
+                     &lt;integer&gt; &lt;CharacterList&gt;
+  ENSG00000000003.14      4535          TSPAN6
+   ENSG00000000005.5      1610            TNMD
+  ENSG00000000419.12      1207            DPM1
+  ENSG00000000457.13      6883           SCYL3
+  ENSG00000000460.16      5967        C1orf112
+                 ...       ...             ...
+   ENSG00000283695.1        61            &lt;NA&gt;
+   ENSG00000283696.1       997            &lt;NA&gt;
+   ENSG00000283697.1      1184    LOC101928917
+   ENSG00000283698.1       940            &lt;NA&gt;
+   ENSG00000283699.1        60         MIR4481
+  -------
+  seqinfo: 25 sequences (1 circular) from an unspecified genome; no seqlengths</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seqinfo</span>(rse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Seqinfo object with 25 sequences (1 circular) from an unspecified genome; no seqlengths:
+  seqnames seqlengths isCircular genome
+  chr1           &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  chr2           &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  chr3           &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  chr4           &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  chr5           &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  ...             ...        ...    ...
+  chr21          &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  chr22          &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  chrX           &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  chrY           &lt;NA&gt;       &lt;NA&gt;   &lt;NA&gt;
+  chrM           &lt;NA&gt;       TRUE   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<p>The <code>rowRanges</code> here were determined by the quantification method that the <em>recount2</em> authors used.</p>
+<p>We don’t know what the genome is from the <code>seqinfo</code>, but we could look this up from the project website.</p>
+<p>The following code I use to clean up the condition and treatment variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>rse<span class="sc">$</span>condition <span class="sc">%&lt;&gt;%</span> (<span class="cf">function</span>(x) {</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="fu">sub</span>(<span class="st">"-"</span>,<span class="st">"."</span>, <span class="fu">sub</span>(<span class="st">"disease state: (.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>,x) ))</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>rse<span class="sc">$</span>treatment <span class="sc">%&lt;&gt;%</span> (<span class="cf">function</span>(x) <span class="fu">factor</span>(<span class="fu">sub</span>(<span class="st">"treatment: (.*)"</span>,<span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>,x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we have:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rse<span class="sc">$</span>condition, rse<span class="sc">$</span>treatment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               
+                HRV16 Vehicle
+  asthmatic         6       6
+  non.asthmatic     6       6</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-count-matrix-data-in-a-se" class="level3" data-number="5.9.5">
+<h3 data-number="5.9.5" class="anchored" data-anchor-id="visualizing-count-matrix-data-in-a-se"><span class="header-section-number">5.9.5</span> Visualizing count matrix data in a SE</h3>
+<p>Here we just use a transformation so that we can compute meaningful distances on count data (without a larger discussion on normalization).</p>
+<p>We build a <strong>DESeqDataSet</strong> and then specify the experimental design using a <code>~</code> and the variables that we expect to produce differences in the counts. (These variables are used to assess how much technical variability is in the data, but not used in the transformation function itself.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DESeq2)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSet</span>(rse, <span class="sc">~</span>condition <span class="sc">+</span> treatment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>converting counts to integer mode</code></pre>
+</div>
+</div>
+<p>We use this function, which implements a <strong>variance stabilizing transformation</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>vsd <span class="ot">&lt;-</span> <span class="fu">vst</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We calculate the variance across all samples (on the transformed data):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(matrixStats)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>rv <span class="ot">&lt;-</span> <span class="fu">rowVars</span>(<span class="fu">assay</span>(vsd))</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">order</span>(rv, <span class="at">decreasing=</span><span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, before plotting a heatmap, we <strong>extract the covariates</strong> that we want to annotated the top of the plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>anno_col <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">colData</span>(vsd)[,<span class="fu">c</span>(<span class="st">"condition"</span>,<span class="st">"treatment"</span>)])</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>anno_col</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               condition treatment
+SRR1565926     asthmatic     HRV16
+SRR1565927     asthmatic     HRV16
+SRR1565928     asthmatic     HRV16
+SRR1565929     asthmatic     HRV16
+SRR1565930     asthmatic     HRV16
+SRR1565931     asthmatic     HRV16
+SRR1565932     asthmatic   Vehicle
+SRR1565933     asthmatic   Vehicle
+SRR1565934     asthmatic   Vehicle
+SRR1565935     asthmatic   Vehicle
+SRR1565936     asthmatic   Vehicle
+SRR1565937     asthmatic   Vehicle
+SRR1565938 non.asthmatic     HRV16
+SRR1565939 non.asthmatic     HRV16
+SRR1565940 non.asthmatic     HRV16
+SRR1565941 non.asthmatic     HRV16
+SRR1565942 non.asthmatic     HRV16
+SRR1565943 non.asthmatic     HRV16
+SRR1565944 non.asthmatic   Vehicle
+SRR1565945 non.asthmatic   Vehicle
+SRR1565946 non.asthmatic   Vehicle
+SRR1565947 non.asthmatic   Vehicle
+SRR1565948 non.asthmatic   Vehicle
+SRR1565949 non.asthmatic   Vehicle</code></pre>
+</div>
+</div>
+<p>This code pull out the top of the transformed data by variance, and adds an annotation to the top of the plot.</p>
+<p>By default the rows and columns will be clustered by Euclidean distance. See <code>?pheatmap</code> for more details on this function (it’s a very detailed manual page).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(<span class="fu">assay</span>(vsd)[o,],</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">annotation_col=</span>anno_col,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">show_rownames=</span><span class="cn">FALSE</span>, </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">show_colnames=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="intro-to-bioc_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can also easily make a PCA plot with dedicated functions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPCA</span>(vsd, <span class="at">intgroup=</span><span class="st">"treatment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="intro-to-bioc_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="singlecellexperiment" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="singlecellexperiment"><span class="header-section-number">5.10</span> SingleCellExperiment</h2>
+<p>An example of a class that extends the SE is <strong>SingleCellExperiment</strong>. This is a special object type for looking at single cell data.</p>
+<p>For more details, there is a free online book “Orchestrating Single Cell Analysis With Bioconductor” produced by a group within the Bioconductor Project, with lots of example analyses: <a href="http://bioconductor.org/books/3.15/OSCA.basic/">OSCA</a>.</p>
+<p>Here we show a quick example of how this object extends the SE.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SingleCellExperiment)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">as</span>(rse, <span class="st">"SingleCellExperiment"</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>sce</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: SingleCellExperiment 
+dim: 58037 24 
+metadata(0):
+assays(1): counts
+rownames(58037): ENSG00000000003.14 ENSG00000000005.5 ...
+  ENSG00000283698.1 ENSG00000283699.1
+rowData names(3): gene_id bp_length symbol
+colnames(24): SRR1565926 SRR1565927 ... SRR1565948 SRR1565949
+colData names(23): project sample ... condition treatment
+reducedDimNames(0):
+mainExpName: NULL
+altExpNames(0):</code></pre>
+</div>
+</div>
+<p>There are special functions dedicated to scaling the samples (we will discuss this technical aspect soon):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scran)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: scuttle</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">computeSumFactors</span>(sce)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sizeFactors</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.7672143 0.8205514 0.8686567 0.9479224 0.6484723 0.9815079 1.0797070
+ [8] 1.0569889 1.4377886 0.9465292 1.4759422 1.2630195 0.8889808 1.0524670
+[15] 0.9677885 0.8086102 0.8806503 0.8999780 0.9505805 1.0430322 1.2527967
+[22] 0.9908707 0.5208294 1.4491155</code></pre>
+</div>
+</div>
+<p>Similarly, dedicated functions for transformations:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">logNormCounts</span>(sce)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">assayNames</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "counts"    "logcounts"</code></pre>
+</div>
+</div>
+<p>And dedicated functions and new slots for reduced dimensions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>sce <span class="ot">&lt;-</span> <span class="fu">fixedPCA</span>(sce, <span class="at">rank=</span><span class="dv">5</span>, <span class="at">subset.row=</span><span class="cn">NULL</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">reducedDimNames</span>(sce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "PCA"</code></pre>
+</div>
+</div>
+<p>We can manually get at the PCs:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">reducedDim</span>(sce, <span class="st">"PCA"</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pca[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="intro-to-bioc_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>But we can more easily use dedicated visualization functions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotReducedDim</span>(sce, <span class="st">"PCA"</span>, <span class="at">colour_by=</span><span class="st">"treatment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="intro-to-bioc_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="session-info" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="session-info"><span class="header-section-number">5.11</span> Session Info</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.1 (2023-06-16)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.0
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] scater_1.28.0               ggplot2_3.4.4              
+ [3] scran_1.28.2                scuttle_1.9.4              
+ [5] SingleCellExperiment_1.22.0 pheatmap_1.0.12            
+ [7] DESeq2_1.40.2               magrittr_2.0.3             
+ [9] here_1.0.1                  EnsDb.Hsapiens.v86_2.99.0  
+[11] ensembldb_2.24.1            AnnotationFilter_1.24.0    
+[13] GenomicFeatures_1.52.2      AnnotationDbi_1.62.2       
+[15] SummarizedExperiment_1.30.2 Biobase_2.60.0             
+[17] GenomicRanges_1.52.1        GenomeInfoDb_1.36.4        
+[19] IRanges_2.34.1              S4Vectors_0.38.2           
+[21] BiocGenerics_0.46.0         MatrixGenerics_1.12.3      
+[23] matrixStats_1.0.0          
+
+loaded via a namespace (and not attached):
+  [1] RColorBrewer_1.1-3        rstudioapi_0.15.0        
+  [3] jsonlite_1.8.7            ggbeeswarm_0.7.2         
+  [5] farver_2.1.1              rmarkdown_2.25           
+  [7] BiocIO_1.10.0             zlibbioc_1.46.0          
+  [9] vctrs_0.6.4               memoise_2.0.1            
+ [11] Rsamtools_2.16.0          DelayedMatrixStats_1.22.6
+ [13] RCurl_1.98-1.12           htmltools_0.5.6.1        
+ [15] S4Arrays_1.0.6            progress_1.2.2           
+ [17] curl_5.1.0                BiocNeighbors_1.18.0     
+ [19] htmlwidgets_1.6.2         cachem_1.0.8             
+ [21] GenomicAlignments_1.36.0  igraph_1.5.1             
+ [23] lifecycle_1.0.3           pkgconfig_2.0.3          
+ [25] rsvd_1.0.5                Matrix_1.6-1.1           
+ [27] R6_2.5.1                  fastmap_1.1.1            
+ [29] GenomeInfoDbData_1.2.10   digest_0.6.33            
+ [31] colorspace_2.1-0          rprojroot_2.0.3          
+ [33] dqrng_0.3.1               irlba_2.3.5.1            
+ [35] RSQLite_2.3.1             beachmat_2.16.0          
+ [37] filelock_1.0.2            labeling_0.4.3           
+ [39] fansi_1.0.5               httr_1.4.7               
+ [41] abind_1.4-5               compiler_4.3.1           
+ [43] bit64_4.0.5               withr_2.5.2              
+ [45] BiocParallel_1.34.2       viridis_0.6.4            
+ [47] DBI_1.1.3                 biomaRt_2.56.1           
+ [49] rappdirs_0.3.3            DelayedArray_0.26.7      
+ [51] rjson_0.2.21              bluster_1.10.0           
+ [53] tools_4.3.1               vipor_0.4.5              
+ [55] beeswarm_0.4.0            glue_1.6.2               
+ [57] restfulr_0.0.15           grid_4.3.1               
+ [59] cluster_2.1.4             generics_0.1.3           
+ [61] gtable_0.3.4              hms_1.1.3                
+ [63] BiocSingular_1.16.0       ScaledMatrix_1.8.1       
+ [65] metapod_1.7.0             xml2_1.3.5               
+ [67] utf8_1.2.4                XVector_0.40.0           
+ [69] ggrepel_0.9.4             pillar_1.9.0             
+ [71] stringr_1.5.0             limma_3.56.2             
+ [73] dplyr_1.1.3               BiocFileCache_2.8.0      
+ [75] lattice_0.22-5            rtracklayer_1.60.1       
+ [77] bit_4.0.5                 tidyselect_1.2.0         
+ [79] locfit_1.5-9.8            Biostrings_2.68.1        
+ [81] knitr_1.44                gridExtra_2.3            
+ [83] ProtGenerics_1.32.0       edgeR_3.42.4             
+ [85] xfun_0.40                 statmod_1.5.0            
+ [87] stringi_1.7.12            lazyeval_0.2.2           
+ [89] yaml_2.3.7                evaluate_0.22            
+ [91] codetools_0.2-19          tibble_3.2.1             
+ [93] BiocManager_1.30.22       cli_3.6.1                
+ [95] munsell_0.5.0             Rcpp_1.0.11              
+ [97] dbplyr_2.3.4              png_0.1-8                
+ [99] XML_3.99-0.15             parallel_4.3.1           
+[101] blob_1.2.4                prettyunits_1.2.0        
+[103] sparseMatrixStats_1.12.2  bitops_1.0-7             
+[105] viridisLite_0.4.2         scales_1.2.1             
+[107] crayon_1.5.2              BiocStyle_2.28.1         
+[109] rlang_1.1.1               KEGGREST_1.40.1          </code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./exercises-03.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Workshop</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./intro-to-single-cell.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Overview of single-cell analysis in R/Bioconductor</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
