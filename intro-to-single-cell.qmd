@@ -21,7 +21,7 @@ library(scater)
 
 We will go through the slides available here:
 
--   https://docs.google.com/presentation/d/1XHfN-5NCXtu1P4reotrckGplPXJBTlQraFpd8ViPf1g/edit?usp=sharing
+-   <https://docs.google.com/presentation/d/1XHfN-5NCXtu1P4reotrckGplPXJBTlQraFpd8ViPf1g/edit?usp=sharing>
 
 ## Part 2
 
@@ -78,7 +78,7 @@ This class implements a data structure that stores all aspects of our single-cel
 knitr::include_graphics("figures/SingleCellExperiment.png")
 ```
 
-\[Amezquita et al. 2019 (https://doi.org/10.1101/590562)\]
+\[Amezquita et al. 2019 (<https://doi.org/10.1101/590562>)\]
 
 -   Each piece of (meta)data in the `SingleCellExperiment` is **represented by a separate "slot"**.
 
@@ -86,7 +86,7 @@ knitr::include_graphics("figures/SingleCellExperiment.png")
 
 If we imagine the `SingleCellExperiment` object to be a cargo ship, the **slots can be thought of as individual cargo boxes with different contents**, e.g., certain slots expect numeric matrices whereas others may expect data frames.
 
-If you want to know more about the available slots, their expected formats, and how we can interact with them, check out this [chapter](https://bioconductor.org/books/3.15/OSCA.intro/the-singlecellexperiment-class.html).
+If you want to know more about the available slots, their expected formats, and how we can interact with them, check out this [chapter](https://bioconductor.org/books/release/OSCA.intro/the-singlecellexperiment-class.html).
 
 ::: callout-note
 ### `SingleCellExperiment` Example
@@ -189,7 +189,7 @@ markers[[1]]
 
 If you could like to see Quick Start for scRNA-seq data with multiple batches, check out this workflow:
 
--   https://bioconductor.org/books/3.15/OSCA.intro/analysis-overview.html#quick-start-multiple-batches
+-   <https://bioconductor.org/books/release/OSCA.intro/analysis-overview.html#quick-start-multiple-batches>
 
 ## Session Info
 
